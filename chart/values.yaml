@@ -4,7 +4,7 @@ productShortName: mist
 
 # Settings for docker images used in the chart.
 image:
-  registry: mistce
+  registry: gcr.io/mist-ops/mist-ee
   tag: master
   pullPolicy: Always
   secrets:
