@@ -1,8 +1,7 @@
-# Mist.io Community Edition
+# Mist.io Enterprise Edition
 
 Mist.io helps you operate, monitor and govern your computing infrastructure,
-across clouds and platforms. The code is provided under the GNU AGPL v3.0
-License.
+across clouds and platforms.
 
 The Enterprise Edition and the Hosted Service that include Role Based Access, VPN tunnels and
 Insights for cost optimization are available at https://mist.io
@@ -24,8 +23,8 @@ in order to run it, one needs to install a recent version of
 [docker](https://docs.docker.com/engine/installation/) and
 [docker-compose](https://docs.docker.com/compose/install/).
 
-To install the latest stable release, head over to 
-[releases](https://github.com/mistio/mist-ce/releases) and follow the
+To install the latest stable release, head over to
+[releases](https://github.com/mistio/mist-ee/releases) and follow the
 instructions there.
 
 After a few minutes (depending on your connection) all mist.io containers will
@@ -136,13 +135,13 @@ directory containing the `docker-compose.yml` file:
 
 1. Bring down your current installation by running `docker-compose down`.
 2. Download the docker-compose.yml file of the latest release and place it
-within the same directory as before. This way the new installation will use the 
+within the same directory as before. This way the new installation will use the
 same Docker volumes.
 3. Run `docker-compose up -d` to bring up the new version.
 4. Check that everything is in order by running `docker-compose ps`. Also check
 if your Mist.io portal works as expected.
-5. In some cases, it might be necessary to run the latest database migration 
-scripts. Connect to the api container and run the latest scripts in 
+5. In some cases, it might be necessary to run the latest database migration
+scripts. Connect to the api container and run the latest scripts in
 `mist.io/api/migrations`. e.g. `docker-compose exec api ls migrations`
 and then `docker-compose exec api python migrations/0006-list-locations.py`
 
@@ -152,8 +151,8 @@ If you want to install the latest bleeding edge build of mist.io,
 run the following:
 
 ```bash
-mkdir mist-ce && cd mist-ce && echo 'MIST_TAG=staging' > .env
-wget https://raw.githubusercontent.com/mistio/mist-ce/staging/docker-compose.yml
+mkdir mist-ee && cd mist-ee && echo 'MIST_TAG=staging' > .env
+wget https://raw.githubusercontent.com/mistio/mist-ee/staging/docker-compose.yml
 docker-compose up -d
 ```
 
@@ -164,8 +163,8 @@ method is recommended.
 
 Clone this git repo and all its submodules with something like:
 
-    git clone --recursive https://github.com/mistio/mist-ce.git
-    cd mist-ce
+    git clone --recursive https://github.com/mistio/mist-ee.git
+    cd mist-ee
     docker-compose up -d
 
 This may take some time.

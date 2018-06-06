@@ -33,6 +33,11 @@ services:
       - ./defaults.py:$CONF_DIR/defaults.py:ro
       - ./api:/mist.api:rw
       - ./keys:/keys
+      - ./rbac:/opt/rbac:rw
+      - ./manage:/opt/manage:rw
+      - ./insights:/opt/insights:rw
+      - ./orchestration:/opt/orchestration:rw
+      - ./auth:/opt/auth:rw
   celery-gevent: *backend
   scheduler: *backend
   poller: *backend

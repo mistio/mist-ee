@@ -10,3 +10,18 @@
 [submodule "tests"]
 	path = tests
 	url = ../mist.tests.git
+[submodule "rbac"]
+	path = rbac
+	url = ../mist.rbac.git
+[submodule "manage"]
+	path = manage
+	url = ../mist.manage.git
+[submodule "insights"]
+	path = insights
+	url = ../mist.insights.git
+[submodule "orchestration"]
+	path = orchestration
+	url = ../mist.orchestration.git
+[submodule "auth"]
+	path = auth
+	url = ../mist.auth.git

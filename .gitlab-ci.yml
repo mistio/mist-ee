@@ -1,15 +1,15 @@
 variables:
   GET_SOURCES_ATTEMPTS: 3
-  DEPLOY_DOMAIN_SUFFIX: -ce.review.mist.io
-  TEST_DEPLOY_DOMAIN_SUFFIX: -ce.test.mist.io
+  DEPLOY_DOMAIN_SUFFIX: -ee.review.mist.io
+  TEST_DEPLOY_DOMAIN_SUFFIX: -ee.test.mist.io
 
   # Possible values are CI_REGISTRY, EXT_REGISTRY, DOCKERHUB
-  COMPOSE_REGISTRY: DOCKERHUB
+  COMPOSE_REGISTRY: CI_REGISTRY
   DEPLOY_REGISTRY: EXT_REGISTRY
   # Set to empty string '' to disable.
-  DEPLOY_REGISTRY_AUTH: ''
+  DEPLOY_REGISTRY_AUTH: '1'
   # API & UI tests image
-  TESTS_IMAGE: $DOCKERHUB_IMAGE/tests:$CI_COMMIT_SHA
+  TESTS_IMAGE: $CI_REGISTRY_IMAGE/tests:$CI_COMMIT_SHA
 
 stages:
   - discover
@@ -155,6 +155,11 @@ discover submodules:
 build api:
   <<: *docker_template
   script:
+    - |
+        for submodule in rbac manage orchestration insights auth; do
+          git submodule sync $submodule
+          git submodule update --init $submodule
+        done
     - SRC_IMG="mist/mist:$(get_submodule_sha api)"
     - docker_pull $SRC_IMG
     - |
@@ -505,7 +510,7 @@ release: &release_template
     - sed -i 's/^### Changes/## Changes/' release.md
     - echo >> release.md
     - sed "s/TAG/$CI_BUILD_REF_NAME/g;s/REPO/mist\.io/g" ci/release.md >> release.md
-    - ./ci/release.py $RELEASE_ARGS --draft -f release/* -m @release.md mistio mist-ce $CI_BUILD_REF_NAME
+    - ./ci/release.py $RELEASE_ARGS --draft -f release/* -m @release.md mistio mist-ee $CI_BUILD_REF_NAME
   only:
     # only for references that match a version string (v1.2.3)
     - /^v\d+\.\d+\.\d+$/
