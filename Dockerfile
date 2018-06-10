@@ -4,11 +4,11 @@ FROM $FROM_IMAGE
 
 # Install plugins.
 COPY ./rbac/ /opt/rbac/
-COPY ./manage/ /opt/manage/
+COPY ./manage/src /opt/manage/
 COPY ./insights/ /opt/insights/
 COPY ./orchestration/ /opt/orchestration/
 COPY ./auth/ /opt/auth/
-RUN for plugin in rbac manage insights orchestration auth; do pip install -e /opt/$plugin; done
+RUN for plugin in rbac insights orchestration auth; do pip install -e /opt/$plugin; done
 
 # Configure product defaults.
 ENV DEFAULTS_FILE=/etc/mist/defaults.py \
