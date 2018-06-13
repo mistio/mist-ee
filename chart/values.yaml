@@ -75,6 +75,9 @@ stripe:
   publicApiKey: ''
   privateApiKey: ''
 
+# Node selector will be applied to all pods for all deployments.
+nodeSelector: {}
+
 # Deployment options (replicas, resource quotas etc).
 deployment:
 
@@ -85,13 +88,13 @@ deployment:
     prefork:
       enabled: true
       pool: prefork
-      replicas: 1
+      replicas: 4
       resources:
         requests:
           memory: 1000Mi
-          cpu: 400m
+          cpu: 600m
         limits:
-          memory: 2000Mi
+          memory: 1200Mi
           cpu: 2000m
       queues:
         - celery
@@ -101,14 +104,14 @@ deployment:
         - mappings
     gevent:
       enabled: true
-      replicas: 1
+      replicas: 2
       pool: gevent
       resources:
         requests:
           memory: 150Mi
-          cpu: 60m
+          cpu: 500m
         limits:
-          memory: 1000Mi
+          memory: 250Mi
           cpu: 1000m
       queues:
         - scripts
@@ -237,18 +240,18 @@ deployment:
 
   # Api deployment settings.
   api:
-    replicas: 1
+    replicas: 2
     resources:
       requests:
-        memory: 700Mi
-        cpu: 500m
+        memory: 800Mi
+        cpu: 600m
       limits:
-        memory: 1500Mi
+        memory: 1000Mi
         cpu: 2000m
 
   # Sockjs deployment settings.
   sockjs:
-    replicas: 1
+    replicas: 2
     resources:
       requests:
         memory: 100Mi
@@ -262,10 +265,10 @@ deployment:
     replicas: 1
     resources:
       requests:
-        memory: 20Mi
+        memory: 30Mi
         cpu: 10m
       limits:
-        memory: 40Mi
+        memory: 50Mi
         cpu: 100m
 
   # Nginx deployment settings.

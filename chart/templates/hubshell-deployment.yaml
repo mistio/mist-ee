@@ -21,7 +21,7 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           requests:
-            memory: 80Mi
+            memory: 100Mi
             cpu: 10m
           limits:
             memory: 200Mi
@@ -34,3 +34,7 @@ spec:
       - name: {{ .Values.productShortName }}-config
         configMap:
           name: {{ .Values.productShortName }}
+{{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+{{- end }}
