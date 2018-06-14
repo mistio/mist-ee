@@ -10,7 +10,7 @@ variables:
   DEPLOY_REGISTRY_AUTH: '1'
   # API & UI tests image
   TESTS_IMAGE: $CI_REGISTRY_IMAGE/tests:$CI_COMMIT_SHA
-  SUBMODULES_IMAGE: mist
+  SUBMODULES_IMAGE: gcr.io/mist-ops
 
 stages:
   - discover
@@ -35,6 +35,8 @@ discover submodules:
   before_script:
     - apk add --no-cache git
   script:
+    - git submodule sync manage
+    - git submodule update --init manage
     - |
         git submodule status --recursive | \
           sed 's/^[ +-]\([0-9a-f]*\) \([^ ]*\).*$/\1,\2/' > submodules.csv
@@ -210,6 +212,7 @@ build elasticsearch-manage: *docker_build_template
 retag landing: *docker_retag_template
 retag ui: *docker_retag_template
 retag tests: *docker_retag_template
+retag manage manage/ui: *docker_retag_template
 
 
 compose:
