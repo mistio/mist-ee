@@ -292,3 +292,14 @@ deployment:
       limits:
         memory: 50Mi
         cpu: 200m
+
+  # Manage deployment settings.
+  manage:
+    replicas: 1
+    resources:
+      requests:
+        memory: 20Mi
+        cpu: 10m
+      limits:
+        memory: 50Mi
+        cpu: 200m
