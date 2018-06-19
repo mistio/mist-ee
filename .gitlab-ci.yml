@@ -428,6 +428,7 @@ API:io:rbac: *api_test_template
 API:io:ip_whitelisting: *api_test_template
 
 API:core:orchestration: *api_test_template
+.API:core:tunnels: *api_test_template
 
 
 .ui_test_template: &ui_test_template
