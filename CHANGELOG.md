@@ -1,49 +1,19 @@
 # Changelog
 
+## v3.0.0-rc.6 (11 June 2018)
 
-## v3.0.1 (2 Jun 2018)
+Major new release of the Mist Cloud Management Platform. 
 
-Bugfix and cleanup release. Adds polling for networks. Improves KVM machine creation. Improves DB query performance.
-
-### Upgrading from v3.0.0
-
-1. Bring down your existing installation by running `docker-compose down` within the directory where the docker-compose.yml file resides.
-2. Replace docker-compose.yaml with the one available in the assets of the current release right above.
-3. Bring everything back up by running `docker-compose up -d`. Check the status by running `docker-compose ps`.
-4. Once all services are running, execute the following migration steps:
-
-```
-    docker-compose exec api python api/migrations/0011-migrate-networks.py
-    docker-compose exec api python api/migrations/0012-add-metering-schedules.py
-```
-
-
-### Changes
-
-* Feature: Support custom sizes when creating KVM machines.
-* Bugfix: Fix KVM networks upon machine creation.
-* Feature: Support multiple interfaces and attaching to more than one networks when creating KVM machines.
-* Feature: Poller for networks.
-* Change: Sharding of polling tasks.
-* Change: Deprecate collectd support.
-* Change: Support metering of datapoints.
-* Change: Add owner index, improves performance of DB queries.
-* Bugfix: Fix internal server error when editing some rules.
-
-
-## v3.0.0 (29 Apr 2018)
-
-Major new release of the Mist Cloud Management Platform, Community Edition. 
-
-The Community Edition now integrates with Telegraf & InfluxDB to provide a fully open source infrastructure management & monitoring stack. It also includes a revamped alerting & automation engine that will apply your rules to any group of machines. We enhanced the support of many clouds, most notably vSphere, GCE & OpenStack. It's now possible to bring together machines into a single virtual "Cloud". The usability and performance of the UI was greatly improved. At the same time we've remorselessly eliminated more than a few bugs.
+Mist now integrates with Telegraf & InfluxDB to provide a fully open source infrastructure management & monitoring stack. It also includes a revamped alerting & automation engine that will apply your rules to any group of machines. We enhanced the support of many clouds, most notably vSphere, GCE & OpenStack. It's now possible to bring together machines into a single virtual "Cloud". The usability and performance of the UI was greatly improved. At the same time we've remorselessly eliminated more than a few bugs.
 
 A new plugin system was introduced, which is currently used by the Enterprise Edition and the Hosted Service to provide add-on functionality like i) Role Based Access Control, ii) Cost Insights, iii) VPN tunnels, iv) Orchestration of multi-tier architectures like Kubernetes clusters, as well as v) metering & billing extensions.
 
-You can purchase the Mist Enterprise Edition and the Mist Hosted Service at https://mist.io
+You can purchase a license for the Mist Enterprise Edition and a subscription for the Mist Hosted Service at https://mist.io
 
 
 ### Changes
 
+* Feature: Allow private ownership of resources
 * Feature: Machine monitoring, using InfluxDB & Telegraf
 * Feature: Alerting and automation rules on machine metrics, apply rules on groups of machines
 * Feature: Interactive API docs using OpenAPI 3.0 spec & Swagger UI
@@ -53,121 +23,131 @@ You can purchase the Mist Enterprise Edition and the Mist Hosted Service at http
 * Change: Improved vSphere support
 * Change: UI performance improvements
 * Change: Support for plugins
-* Bugfix: Too many bugfixes to count
+* Feature: Support custom sizes when creating KVM machines.
+* Bugfix: Fix KVM networks upon machine creation.
+* Feature: Support multiple interfaces and attaching to more than one networks when creating KVM machines.
+* Feature: Poller for networks.
+* Change: Sharding of polling tasks.
+* Change: Deprecate collectd support.
+* Change: Support metering of datapoints.
+* Change: Add owner index, improves performance of DB queries.
+* Bugfix: Fix internal server error when editing some rules.
+* Change: Improve layout in small screens
+* Bugfix: Update required fields for provisioning in OpenStack
+* Change: Remove deprecated polling tasks
+* Bugfix: Fix create stack perm check
+* Bugfix: Fix machine resize action, rename plan_id to size_id
+* Bugfix: Update OpenStack imported key naming scheme
+* Bugfix: Fail gracefully when listing networks and cloud does not respond
+* Change: Use OpenStack auth URL without force
+* Change: Look for and assign portgroup to nic on vSphere provisioning
+* Bugfix: Redirect to social auth on invite if email signin is disabled
+* Change: Add swagger service in ee docker-compose 
+* Feature: Networks RBAC
+* Change: Openapi spec (!691)
+* Change: Story patches
+* Change: Send machine patches in batches and optimize parsing
+* Change: Only return rds enabled clusters as vSphere locations if available
+* Change: Allow users & teams to be specified as e-mail alert recipients
+* Change: Update notifications api & notification patches
+* Change: Add mongodb index for monitored machines
+* Change: Hide empty location fields
+* Change: Display cloud instead of provider in networks list
+* Bugfix: Refit run script dialog on params change
+* Bugfix: Update keys in sub-form element
+
+## v2.12.0 (15 Feb 2018)
+
+### Changes
+
+* Change: Get datacenter from cluster when provisioning in vSphere
+* Bugfix: Fix backwards compatible computed properties of Rule model
+* Bugfix: Fix primary key of the PeriodicTaskInfo document
+* Change: Remove ListLocationsPollingSchedule from the update_poller task
+* Change: Stop writing logs to mongoDB
+* Change: Add an index on the Organization's name field
 
 
-## v2.6.0 (10 Dec 2017)
+## v2.11.0 (14 Feb 2018)
+
+### Changes
+
+* Feature: Provisioning in vSphere cluster when RDS is enabled
+* Bugfix: Fix rendering of delete network action
+
+## v2.10.1 (12 Feb 2018)
+
+### Changes
+
+* Bugfix: Correctly get DigitalOcean image id in machine listing
+* Bugfix: Compute dashboard chart labels on all monitored machine list updates
+
+## v2.9.0 (6 Feb 2018)
+
+### Changes
+
+* Feature: Improve vSphere support (provisioning, VNC console, display more metadata)
+* Feature: Support ClearCenter SDN as cloud
+* Feature: Support multiple hosts in other server clouds
+* Feature: Fine grained notification overrides
+* Change: Improve alert email notifications
+* Change: Split celery into a gevent and prefork worker in docker-compose.ee.yml
+* Change: Move RBAC & billing plugins to their own submodules
+* Change: Cilia: InfluxDB & multi-monitoring
+* Change: Rbac plugin
+* Change: More pep8 fixes
+* Change: Garbage collection for schedulers
+* Change: Traefik v1.4
+* Change: Split poller
+* Change: Multi monitoring
+* Change: Use poller for listing locations
+* Change: Return cached data by default when requesting all machines over API
+
+## v2.8.0 (10 Dec, 2017)
 
 ### Changes
 
 * Feature: Export CSV on any list
+* Bugfix: Do not require payment if Stripe is not configured
+* Change: Localmail for tests
 * Change: Improve layout in small screens
+* Change: Do not use CELERY_CONTEXT when celery uses a gevent pool of workers
+* Change: Cilia
+* Change: Small tweak in insights-handler
+* Bugfix: Fix tag regex for pushing ee image in CI
 * Bugfix: Update required fields for provisioning in OpenStack
-* Change: Remove deprecated polling tasks (!510)
+* Change: Remove deprecated polling tasks
 
+## v2.7.0 (18 Nov 2017)
 
-## v2.5.0 (18 Nov 2017)
-
-### Changes
-
-* Feature: Chained actions in Rules, backend only (!475)
+* Feature: Chained actions in Rules, backend only 
 * Feature: CSV renderer for API results
 * Feature: Send multipart emails when required
 * Feature: List all machines view
 * Change: Dismiss notifications menu
-* Change: Async session update (!503)
-* Change: Vsphere opts and metadata (!487)
+* Change: Async session update 
+* Change: Vsphere opts and metadata 
 * Bugfix: Catch me.NotUniqueError when renaming a Cloud
 
 
-## v2.4.0 (27 Oct 2017)
+## v2.6.0 (27 Oct 2017)
 
 ### Changes
 
-* Feature: Azurearm provisioning (!457)
+* Feature: Azurearm provisioning
 * Feature: Improved Windows support
-* Feature: Granular Notification Overrides (!460)
+* Feature: Granular Notification Overrides
 * Feature: Resize machine action for EC2, DigitalOcean, OpenStack
-* Bugfix: Fix lock bug https://gitlab.ops.mist.io/mistio/mist.core/issues/1221 (!454)
+* Bugfix: Fix lock bug https://gitlab.ops.mist.io/mistio/mist.core/issues/1221
 * Bugfix: Properly read cost from tags for generic (non-libcloud) machines
 * Bugfix: Fix ping parsing
 * Bugfix: Fix poller computed property
 * Change: Update xterm.js & fix shell display issues
 * Change: Improve display of probe data
-* Change: Exclude audit log ES templates (!473)
-* Change: Run tests with headless Chrome (!442)
-* Change: New rules models (!472)
-* Change: Sso refresh token (!461)
-* Change: Update docker/nginx/nginx.conf (!459)
-* Change: Move ES template for cloudify-metrics to mist.io/docker/elasticsearch-manage (!458)
+* Change: Exclude audit log ES templates 
+* Change: Run tests with headless Chrome 
+* Change: New rules models
+* Change: Sso refresh token 
+* Change: Update docker/nginx/nginx.conf
+* Change: Move ES template for cloudify-metrics to mist.io/docker/elasticsearch-manage
 
-
-## v2.3.0 (19 Sep 2017)
-
-### Changes
-
-* Change: Whitelisting UI improvements (!446)
-* Change: Insights UI improvements
-* Bugfix: Catch invalid SSL cert for OnApp
-* Change: Update GCE pricing, improve list sizes behavior
-
-
-## v2.2.1 (8 Sep 2017)
-
-### Changes
-
-* Bugfix: Use tz aware objects in changelog.py (!445)
-* Bugfix: Install dateutil for ci release step (!444)
-
-
-## v2.2.0 (8 Sep 2017)
-
-### Changes
-
-* Feature: IP whitelisting (!434)
-* Change: Do not hardcore repo name in release process (!382)
-* Change: Ansible script example - update ref (!432)
-* Change: Refactor poller (!420)
-* Change: Change submodule paths (!426)
-* Change: Update ES templates with merge policy (!419)
-* Bugfix: Fix async permission mappings (!401)
-* Change: Fix ordering and naming of crontab fields
-
-
-## v2.1.0 (21 Jul 2017)
-
-### Changes
-
-* Change: Display stack logs grouped by workflow operation (!406)
-* Change: Notifications API & UI improvements (!390) (!409)
-* Change: Update to Libcloud v2
-* Change: Apply stricter checks on the dns enabled cloud field (!404)
-* Bugfix: Fix error in machine weight calculation
-* Change: Update DNS API (!396)
-* Bugfix: Fix association with a secondary key (!394)
-
-
-## v2.0.0 (21 Jun 2017)
-
-This is a major update of the open source version Mist.io with many of the
-latest features and fixes from the Enterprise SaaS version available at
-https://mist.io
-
-It comes with a brand new UI based on Polymer and web components and introduces
-new functionality.
-
-For more details on the changes also check out the
-[blog post](http://blog.mist.io/post/162083041316/our-biggest-mistio-open-source-release-yet).
-
-
-
-### Changes
-
-* Feature: Support for more cloud providers
-* Feature: DNS management
-* Feature: Manage private networks
-* Feature: Support for running scripts (executables as well as Ansible playbooks)
-* Feature: Scheduled tasks
-* Feature: Tagging of all resources
-* Feature: Cost reporting
-* Feature: Support for multiple Users, Teams & Organizations (full RBAC support available in the Enterprise Edition)
