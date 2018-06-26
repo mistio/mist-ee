@@ -97,6 +97,42 @@ If you wish to use a real SMTP server, edit `./config/settings.py` and modify
 Don't forget to restart docker-compose for changes to take effect.
 
 
+### TLS settings
+
+This section applies if you've installed mist by using the `docker-compose.yml`
+file of a mist release.
+
+Assuming a certificate `cert.pem` and private key file `key.pem` in the same
+directory as the `docker-compose.yml` file:
+
+Create a `docker-compose.override.yml` file with the following contents:
+```yaml
+version: '2.0'
+services:
+  nginx:
+    volumes:
+      - ./docker/nginx/nginx-listen.conf:/etc/nginx/nginx-listen.conf:ro
+      - ./docker/nginx/cert.pem:/etc/nginx/cert.pem:ro
+      - ./docker/nginx/key.pem:/etc/nginx/key.pem:ro
+    ports:
+      - 443:80
+```
+
+Create a `nginx-listen.conf` in the directory of `docker-compose.yml`, with the
+following contents:
+```
+server {
+    listen              80 ssl;
+    server_name         www.example.com;
+    ssl_certificate     /etc/nginx/cert.pem;
+    ssl_certificate_key /etc/nginx/key.pem;
+```
+
+Update `CORE_URI` in mist's settings (see URL section above).
+
+Run `docker-compose up -d`.
+
+
 ## Managing Mist.io
 
 Mist.io is managed using `docker-compose`. Look that up for details. Some
