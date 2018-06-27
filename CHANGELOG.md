@@ -1,6 +1,6 @@
 # Changelog
 
-## v3.0.0-rc.6 (11 June 2018)
+## v3.0.0-rc.7 (27 June 2018)
 
 Major new release of the Mist Cloud Management Platform. 
 
