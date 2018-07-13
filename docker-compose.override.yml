@@ -44,7 +44,10 @@ services:
   cilia: *backend
   beat: *backend
   hubshell: *backend
-  api: *backend
+  api:
+    <<: *backend
+    command: bin/wait-all sh
+
   sockjs: *backend
 
   ui:
