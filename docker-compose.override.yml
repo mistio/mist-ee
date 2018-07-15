@@ -65,6 +65,6 @@ services:
     volumes:
       - ./docker/gocky:/etc/gocky
 
-  # manage:
-  #   volumes:
-  #     - ./manage/ui:/manage:rw
+  manage:
+    volumes:
+      - ./manage/ui:/ui:rw
