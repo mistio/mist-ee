@@ -1,6 +1,19 @@
 # Changelog
 
-## v3.0.0-rc.7 (27 June 2018)
+
+## v3.1.0 (16 Jul 2018)
+
+Adds polling for networks. Improves KVM machine creation & networking. Optimize vSphere API queries. Improves DB query performance. Upgrades ELK which lowers RAM requirements.
+
+### Changes
+
+* Feature: Add templates from any Git repo
+* Bugfix: Fix KVM networks upon machine creation.
+* Bugfix: Prevent setting telegraf deployment error to "None"
+* Bugfix: Do not schedule MeteringPollingSchedule task immediately, since that would result in the task being scheduled every time the Organization instance is saved
+* Bugfix: Fix bug regarding incidents not closing when disabling monitoring
+
+## v3.0.0 (27 June 2018)
 
 Major new release of the Mist Cloud Management Platform. 
 
@@ -10,6 +23,7 @@ A new plugin system was introduced, which is currently used by the Enterprise Ed
 
 You can purchase a license for the Mist Enterprise Edition and a subscription for the Mist Hosted Service at https://mist.io
 
+Adds polling for networks. Improves KVM machine creation & networking. Optimize vSphere API queries. Improves DB query performance. Upgrades ELK which lowers RAM requirements.
 
 ### Changes
 
@@ -24,13 +38,16 @@ You can purchase a license for the Mist Enterprise Edition and a subscription fo
 * Change: UI performance improvements
 * Change: Support for plugins
 * Feature: Support custom sizes when creating KVM machines.
-* Bugfix: Fix KVM networks upon machine creation.
+* Feature: Store & display resource creator & owner
+* Feature: Allow to undefine a KVM domain, if it is not active
 * Feature: Support multiple interfaces and attaching to more than one networks when creating KVM machines.
 * Feature: Poller for networks.
 * Change: Sharding of polling tasks.
 * Change: Deprecate collectd support.
 * Change: Support metering of datapoints.
 * Change: Add owner index, improves performance of DB queries.
+* Change: Upgrade ELK to 5.6.10
+* Change: Get vm properties in batches in vSphere driver
 * Bugfix: Fix internal server error when editing some rules.
 * Change: Improve layout in small screens
 * Bugfix: Update required fields for provisioning in OpenStack
