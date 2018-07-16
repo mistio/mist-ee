@@ -120,6 +120,10 @@ services:
     expose:
       - 8081
 
+  insights-handler:
+    <<: *backend
+    command: bin/wait-all python /opt/cloudify_insights/mist/cloudify_insights/handler.py
+
 
   ui:
     image: $IMG_REGISTRY/ui:$IMG_TAG
@@ -191,6 +195,10 @@ services:
 
   manage:
     image: $IMG_REGISTRY/manage/ui:$IMG_TAG
+    command: nginx
+
+  elements:
+    image: $IMG_REGISTRY/elements:$IMG_TAG
     command: nginx
 
 
