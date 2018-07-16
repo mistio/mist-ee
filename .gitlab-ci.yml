@@ -161,7 +161,7 @@ build api:
   <<: *docker_template
   script:
     - |
-        for submodule in rbac manage orchestration insights auth; do
+        for submodule in rbac manage orchestration insights auth cloudify_insights; do
           git submodule sync $submodule
           git submodule update --init $submodule
         done
