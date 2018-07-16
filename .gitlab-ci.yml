@@ -208,6 +208,7 @@ retag landing: *docker_retag_template
 retag ui: *docker_retag_template
 retag tests: *docker_retag_template
 retag manage manage/ui: *docker_retag_template
+retag elements: *docker_retag_template
 
 
 compose:

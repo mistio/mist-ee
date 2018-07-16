@@ -68,3 +68,7 @@ services:
   manage:
     volumes:
       - ./manage/ui:/ui:rw
+
+  elements:
+    volumes:
+      - ./elements:/elements:rw

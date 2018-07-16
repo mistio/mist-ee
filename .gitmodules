@@ -25,3 +25,6 @@
 [submodule "auth"]
 	path = auth
 	url = ../mist.auth.git
+[submodule "elements"]
+	path = elements
+	url = ../mist-elements.git
