@@ -1,6 +1,14 @@
 # Changelog
 
 
+## v3.1.1 (19 Jul 2018)
+
+Minor bugfix release
+
+* Bugfix: Stack page display after installing new template
+* Bugfix: Fix KeyError exception which could happen when a user does not belong to any team
+* Bugfix: Updating an org would sometimes toggle the ownership flag
+
 ## v3.1.0 (16 Jul 2018)
 
 Adds polling for networks. Improves KVM machine creation & networking. Optimize vSphere API queries. Improves DB query performance. Upgrades ELK which lowers RAM requirements.
