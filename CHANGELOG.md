@@ -2,8 +2,9 @@
 
 ## v3.2.0 (4 Aug 2018)
 
-Performance optimizations, preliminary support for Alibaba Cloud (Aliyun ECS), minor bugfixes
+Performance optimizations, use existing machines when creating stacks, preliminary support for Alibaba Cloud (Aliyun ECS), minor bugfixes.
 
+* Feature: Allow using existing machines in stacks instead of provisioning new ones
 * Feature: Initial support for Alibaba Cloud
 * Feature: Configure default post deploy steps for selected clouds
 * Feature: Support VNC console action on OpenStack
