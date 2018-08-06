@@ -1,6 +1,6 @@
 # Changelog
 
-## v3.2.0 (4 Aug 2018)
+## v3.2.0 (6 Aug 2018)
 
 Performance optimizations, use existing machines when creating stacks, preliminary support for Alibaba Cloud (Aliyun ECS), minor bugfixes.
 
@@ -11,6 +11,7 @@ Performance optimizations, use existing machines when creating stacks, prelimina
 * Bugfix: Fix influxdb mountpath in helm chart
 * Bugfix: Fix VCloud OS detection
 * Bugfix: Fix vSphere machine listing issue
+* Bugfix: Fix load graph for many machines
 * Change: Expose more settings for rabbitmq, gocky, cilia in helm chart
 * Change: Upgrade gocky images
 * Change: Configurable pollers in helm chart
