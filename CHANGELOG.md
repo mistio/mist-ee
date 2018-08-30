@@ -52,7 +52,7 @@ Adds polling for networks. Improves KVM machine creation & networking. Optimize 
 
 ## v3.0.0 (27 June 2018)
 
-Major new release of the Mist Cloud Management Platform. 
+Major new release of the Mist Cloud Management Platform.
 
 Mist now integrates with Telegraf & InfluxDB to provide a fully open source infrastructure management & monitoring stack. It also includes a revamped alerting & automation engine that will apply your rules to any group of machines. We enhanced the support of many clouds, most notably vSphere, GCE & OpenStack. It's now possible to bring together machines into a single virtual "Cloud". The usability and performance of the UI was greatly improved. At the same time we've remorselessly eliminated more than a few bugs.
 
@@ -96,7 +96,7 @@ Adds polling for networks. Improves KVM machine creation & networking. Optimize 
 * Change: Use OpenStack auth URL without force
 * Change: Look for and assign portgroup to nic on vSphere provisioning
 * Bugfix: Redirect to social auth on invite if email signin is disabled
-* Change: Add swagger service in ee docker-compose 
+* Change: Add swagger service in ee docker-compose
 * Feature: Networks RBAC
 * Change: Openapi spec (!691)
 * Change: Story patches
@@ -174,13 +174,13 @@ Adds polling for networks. Improves KVM machine creation & networking. Optimize 
 
 ## v2.7.0 (18 Nov 2017)
 
-* Feature: Chained actions in Rules, backend only 
+* Feature: Chained actions in Rules, backend only
 * Feature: CSV renderer for API results
 * Feature: Send multipart emails when required
 * Feature: List all machines view
 * Change: Dismiss notifications menu
-* Change: Async session update 
-* Change: Vsphere opts and metadata 
+* Change: Async session update
+* Change: Vsphere opts and metadata
 * Bugfix: Catch me.NotUniqueError when renaming a Cloud
 
 
@@ -198,10 +198,10 @@ Adds polling for networks. Improves KVM machine creation & networking. Optimize 
 * Bugfix: Fix poller computed property
 * Change: Update xterm.js & fix shell display issues
 * Change: Improve display of probe data
-* Change: Exclude audit log ES templates 
-* Change: Run tests with headless Chrome 
+* Change: Exclude audit log ES templates
+* Change: Run tests with headless Chrome
 * Change: New rules models
-* Change: Sso refresh token 
+* Change: Sso refresh token
 * Change: Update docker/nginx/nginx.conf
 * Change: Move ES template for cloudify-metrics to mist.io/docker/elasticsearch-manage
 
