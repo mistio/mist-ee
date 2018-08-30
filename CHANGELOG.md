@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.2.1 (unreleased)
+
+* Change: Reduce poller update threshold to 90 secs
+
+
 ## v3.2.0 (6 Aug 2018)
 
 Performance optimizations, use existing machines when creating stacks, preliminary support for Alibaba Cloud (Aliyun ECS), minor bugfixes.
