@@ -2,6 +2,7 @@
 
 ## v3.2.1 (unreleased)
 
+* Bugfix: Fix required machine fields when creating stacks
 * Change: Reduce poller update threshold to 90 secs
 
 
