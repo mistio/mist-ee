@@ -1,5 +1,34 @@
 # Changelog
 
+## v3.2.1 (unreleased)
+
+* Bugfix: Fix required machine fields when creating stacks
+* Change: Reduce poller update threshold to 90 secs
+
+
+## v3.2.0 (6 Aug 2018)
+
+Performance optimizations, use existing machines when creating stacks, preliminary support for Alibaba Cloud (Aliyun ECS), minor bugfixes.
+
+* Feature: Allow using existing machines in stacks instead of provisioning new ones
+* Feature: Initial support for Alibaba Cloud
+* Feature: Configure default post deploy steps for selected clouds
+* Feature: Support VNC console action on OpenStack
+* Bugfix: Fix influxdb mountpath in helm chart
+* Bugfix: Fix VCloud OS detection
+* Bugfix: Fix vSphere machine listing issue
+* Bugfix: Fix load graph for many machines
+* Change: Expose more settings for rabbitmq, gocky, cilia in helm chart
+* Change: Upgrade gocky images
+* Change: Configurable pollers in helm chart
+* Change: Add flag to disable machine polling acceleration
+* Change: Optimize tag query when calculating machine cost
+* Change: Re-implement metering for checks and datapoints based on rate/sec
+* Change: Dont probe stopped machines or localhost
+* Change: Dont run update_poller task if not necessary
+* Change: Import middleware chains from plugins, if defined
+* Change: Make scheduler configurable in bin/poller
+
 
 ## v3.1.1 (19 Jul 2018)
 
@@ -23,7 +52,7 @@ Adds polling for networks. Improves KVM machine creation & networking. Optimize 
 
 ## v3.0.0 (27 June 2018)
 
-Major new release of the Mist Cloud Management Platform. 
+Major new release of the Mist Cloud Management Platform.
 
 Mist now integrates with Telegraf & InfluxDB to provide a fully open source infrastructure management & monitoring stack. It also includes a revamped alerting & automation engine that will apply your rules to any group of machines. We enhanced the support of many clouds, most notably vSphere, GCE & OpenStack. It's now possible to bring together machines into a single virtual "Cloud". The usability and performance of the UI was greatly improved. At the same time we've remorselessly eliminated more than a few bugs.
 
@@ -67,7 +96,7 @@ Adds polling for networks. Improves KVM machine creation & networking. Optimize 
 * Change: Use OpenStack auth URL without force
 * Change: Look for and assign portgroup to nic on vSphere provisioning
 * Bugfix: Redirect to social auth on invite if email signin is disabled
-* Change: Add swagger service in ee docker-compose 
+* Change: Add swagger service in ee docker-compose
 * Feature: Networks RBAC
 * Change: Openapi spec (!691)
 * Change: Story patches
@@ -145,13 +174,13 @@ Adds polling for networks. Improves KVM machine creation & networking. Optimize 
 
 ## v2.7.0 (18 Nov 2017)
 
-* Feature: Chained actions in Rules, backend only 
+* Feature: Chained actions in Rules, backend only
 * Feature: CSV renderer for API results
 * Feature: Send multipart emails when required
 * Feature: List all machines view
 * Change: Dismiss notifications menu
-* Change: Async session update 
-* Change: Vsphere opts and metadata 
+* Change: Async session update
+* Change: Vsphere opts and metadata
 * Bugfix: Catch me.NotUniqueError when renaming a Cloud
 
 
@@ -169,10 +198,10 @@ Adds polling for networks. Improves KVM machine creation & networking. Optimize 
 * Bugfix: Fix poller computed property
 * Change: Update xterm.js & fix shell display issues
 * Change: Improve display of probe data
-* Change: Exclude audit log ES templates 
-* Change: Run tests with headless Chrome 
+* Change: Exclude audit log ES templates
+* Change: Run tests with headless Chrome
 * Change: New rules models
-* Change: Sso refresh token 
+* Change: Sso refresh token
 * Change: Update docker/nginx/nginx.conf
 * Change: Move ES template for cloudify-metrics to mist.io/docker/elasticsearch-manage
 
