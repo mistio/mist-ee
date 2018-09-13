@@ -485,6 +485,7 @@ deployment:
   # Manage deployment settings.
   manage:
     replicas: 1
+    autoscaling: *autoscaling
     resources:
       requests:
         memory: 20Mi
@@ -496,6 +497,7 @@ deployment:
   # Insight static elements deployment settings.
   elements:
     replicas: 1
+    autoscaling: *autoscaling
     resources:
       requests:
         memory: 20Mi
