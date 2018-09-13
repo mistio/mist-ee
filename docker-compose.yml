@@ -124,6 +124,9 @@ services:
     <<: *backend
     command: bin/wait-all python /opt/cloudify_insights/mist/cloudify_insights/handler.py
 
+  apply-migrations:
+    <<: *backend
+    command: bin/wait-all bin/migrate
 
   ui:
     image: $IMG_REGISTRY/ui:$IMG_TAG
