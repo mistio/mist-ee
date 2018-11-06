@@ -4,6 +4,8 @@
 
 * Bugfix: Correctly check if DNS is enabled when polling for zones
 * Bugfix: Fix issue when destroying vSphere machines
+* Bugfix: Restore floating ip toggle when creating stacks on OpenStack
+* Change: Update manage UI to use Polymer 2.x
 
 
 ## v3.3.0 (23 October 2018)
