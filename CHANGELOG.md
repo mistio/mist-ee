@@ -1,12 +1,16 @@
 # Changelog
 
+## v3.4.0 (unreleased)
+
+* Feature: Automatic backup & restore scripts for mongo & influx
+* Feature: Pre and post action hooks
+
 ## v3.3.1 (6 November 2018)
 
 * Bugfix: Correctly check if DNS is enabled when polling for zones
 * Bugfix: Fix issue when destroying vSphere machines
 * Bugfix: Restore floating ip toggle when creating stacks on OpenStack
 * Change: Update manage UI to use Polymer 2.x
-
 
 ## v3.3.0 (23 October 2018)
 
