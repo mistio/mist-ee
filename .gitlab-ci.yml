@@ -258,6 +258,7 @@ compose:
 
         function deploy() {
           export namespace="$1"
+          export release="$2"
           touch values.yaml
           export host=$(echo $CI_ENVIRONMENT_URL | sed 's/^https\?:\/\/\(.*\)/\1/')
           kubectl describe namespace/$namespace || \
@@ -304,7 +305,7 @@ compose:
 
           helm init --client-only
           helm repo update
-          helm dependency update ./chart/
+          helm dependency update ./chart/mist/
 
           helm upgrade --install --namespace $namespace \
             --wait --timeout=600 \
@@ -325,10 +326,10 @@ compose:
             --set awsAccessKey="$AWS_ACCESS_KEY" \
             --set awsSecretKey="$AWS_SECRET_KEY" \
             $(elasticsearch_params) \
-            $namespace ./chart/
+            $release ./chart/mist/
           apk add --no-cache curl
           echo "Waiting for environment to be ready..."
-          while kubectl --namespace $namespace get pods | grep -v -e NAME -e Running -e Completed -e Evicted -e OutOfcpu; do
+          while kubectl --namespace $namespace get pods -l release=$release | grep -v -e NAME -e Running -e Completed -e Evicted -e OutOfcpu; do
             sleep 10 && echo '.'
           done
           while !(curl -sSLf "$CI_ENVIRONMENT_URL" >/dev/null); do
@@ -337,7 +338,7 @@ compose:
         }
   script:
     - echo "$values" > values.yaml
-    - deploy $namespace
+    - deploy $namespace $release
   dependencies: []
 
 deploy test:
@@ -347,7 +348,8 @@ deploy test:
     url: http://$CI_COMMIT_REF_SLUG$TEST_DEPLOY_DOMAIN_SUFFIX
     on_stop: undeploy test
   variables:
-    namespace: test-$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
+    namespace: test-$CI_PROJECT_NAME
+    release: test-$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
     values: |
       enableDevUsers: true
       nodeSelector:
@@ -359,7 +361,8 @@ deploy test:
 .deploy_review_template: &deploy_review_template
   <<: *deploy_template
   variables:
-    namespace: $CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
+    namespace: $CI_PROJECT_NAME
+    release: $CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
     values: |
       enableDevUsers: false
       smtp:
@@ -405,7 +408,7 @@ deploy master:
     DISPLAY: ":1.0"
     REGISTER_USER_BEFORE_FEATURE: "True"
     EMAIL: thingirl.tester.mist.io+${CI_JOB_ID}@gmail.com
-    IMAP_HOST: mailmock.test-$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
+    IMAP_HOST: test-$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG-mailmock.test-$CI_PROJECT_NAME.svc.cluster.local
   before_script:
     - 'export TEST=$(echo "$CI_JOB_NAME" | cut -d/ -f1 | cut -d: -f2,3 | tr : /)'
     - echo "Test argument is $TEST"
@@ -500,15 +503,8 @@ UI:insights:
   image: dtzar/helm-kubectl:2.10.0
   variables:
     GIT_STRATEGY: none
-  before_script:
-    - |
-        set -e
-        function undeploy() {
-          helm delete --purge "$1" || true
-          kubectl delete namespace "$1" || true
-        }
   script:
-    - undeploy $namespace
+    - helm delete --purge $release
   allow_failure: true
   dependencies: []
 
@@ -519,7 +515,7 @@ undeploy test:
     action: stop
   variables:
     GIT_STRATEGY: none
-    namespace: test-$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
+    release: test-$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
 
 undeploy review:
   <<: *undeploy_template
@@ -528,7 +524,7 @@ undeploy review:
     action: stop
   variables:
     GIT_STRATEGY: none
-    namespace: $CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
+    release: $CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
   when: manual
   except:
     - master
