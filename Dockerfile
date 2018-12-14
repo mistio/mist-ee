@@ -1,5 +1,5 @@
 # Inherit the mist.api image.
-ARG FROM_IMAGE=mist/mist:staging
+ARG FROM_IMAGE=mist/mist:python3
 FROM $FROM_IMAGE
 
 # Install plugins.
