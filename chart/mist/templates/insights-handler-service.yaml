@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "chart.fullname" . }}-insights-handler
+  labels:
+    app: insights-handler
+    chart: {{ include "chart.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: insights-handler
+    release: {{ .Release.Name }}
