@@ -1,9 +1,7 @@
-# Mist Cloud Management Platform  - Enterprise Edition
+# Mist Cloud Management Platform - Enterprise Edition
 
 Mist helps you manage and monitor your computing infrastructure, across
 multiple clouds and platforms.
-
-Licenses are available for purchase at https://mist.io
 
 <img src="https://mist.io/landing/images/frontpage/home-dashboard.png" width="768">
 
