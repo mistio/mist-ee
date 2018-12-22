@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ include "chart.fullname" . }}-manage
+  labels:
+    app: manage
+    chart: {{ include "chart.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.deployment.manage.replicas | default "1" }}
+  template:
+    metadata:
+      labels:
+        app: manage
+        release: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+{{ toYaml .Values.image.secrets | indent 8 }}
+      containers:
+      - name: manage
+        args:
+        - nginx
+        image: {{ .Values.image.registry }}/manage/ui:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          requests:
+            memory: {{ .Values.deployment.manage.resources.requests.memory | default "30Mi" }}
+            cpu: {{ .Values.deployment.manage.resources.requests.cpu | default "10m" }}
+          limits:
+            memory: {{ .Values.deployment.manage.resources.limits.memory | default "50Mi" }}
+            cpu: {{ .Values.deployment.manage.resources.limits.cpu | default "100m" }}
+{{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+{{- end }}
