@@ -9,7 +9,7 @@ COPY ./insights/ /opt/insights/
 COPY ./orchestration/ /opt/orchestration/
 COPY ./auth/ /opt/auth/
 COPY ./cloudify_insights/ /opt/cloudify_insights/
-RUN for plugin in rbac insights orchestration auth cloudify_insights; do pip install -e /opt/$plugin; done
+RUN for plugin in rbac insights orchestration auth cloudify_insights; do pip install -e /opt/$plugin; pip install -r /opt/$plugin/requirements.txt 2>/dev/null || echo ok; done
 RUN for plugin in manage; do pip install -e /opt/$plugin/src; done
 
 # Configure product defaults.
@@ -31,4 +31,4 @@ RUN echo "{\"sha\":\"$VERSION_SHA\",\"name\":\"$VERSION_NAME\",\"repo\":\"$VERSI
         > /mist-version.json
 
 # Generate swagger spec (API documentation).
-RUN python /mist.api/openapi/generate_api_spec.py
+RUN python3 /mist.api/openapi/generate_api_spec.py
