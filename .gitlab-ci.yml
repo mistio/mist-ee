@@ -502,12 +502,12 @@ UI:ip-whitelisting:
   only:
     - staging
 
-.UI:rbac-1/4: *ui_test_template
-.UI:rbac-2/4: *ui_test_template
-.UI:rbac-3/4: *ui_test_template
-.UI:rbac-4/4: *ui_test_template
-.UI:orchestration: *ui_test_template
-.UI:insights:
+UI:rbac-1/4: *ui_test_template
+UI:rbac-2/4: *ui_test_template
+UI:rbac-3/4: *ui_test_template
+UI:rbac-4/4: *ui_test_template
+UI:orchestration: *ui_test_template
+UI:insights:
   <<: *ui_test_template
   retry: 1
 
