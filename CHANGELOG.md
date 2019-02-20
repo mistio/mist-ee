@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.0.2 (20 February 2019)
+
+* Bugfix: Fix Python3 compatibility issue in vSphere libcloud driver
+
 ## v4.0.1 (20 February 2019)
 
 * Bugfix: Update Python to 3.7.2, fixes uwsgi segfault when handling invalid certs
