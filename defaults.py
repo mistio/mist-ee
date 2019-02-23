@@ -9,7 +9,10 @@ EMAIL_INFO = "info@computradetech.com"
 EMAIL_SALES = "sales@computradetech.com"
 EMAIL_SUPPORT = "support@computradetech.com"
 EMAIL_NOTIFICATIONS = "notifications@clear.glass"
-
+CURRENCY = {
+    "sign": "Rp",
+    "rate": 14028.0
+}
 ENABLE_MONITORING = True
 DOCS_URI = SUPPORT_URI = ''
 
