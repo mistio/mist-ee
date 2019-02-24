@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.0.3 (24 February 2019)
+
+* Bugfix: Fix display of custom org logos
+
 ## v4.0.2 (20 February 2019)
 
 * Bugfix: Fix Python3 compatibility issue in vSphere libcloud driver
