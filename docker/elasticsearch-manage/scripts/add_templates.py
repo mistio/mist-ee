@@ -7,6 +7,8 @@ import json
 import argparse
 import traceback
 
+import certifi
+
 from elasticsearch import Elasticsearch
 
 
@@ -21,13 +23,14 @@ def es_client():
                    os.getenv('ELASTIC_PASSWORD', '')),
         use_ssl=bool(os.getenv('ELASTIC_SSL', False)),
         verify_certs=bool(os.getenv('ELASTIC_VERIFY_CERTS', False)),
+        ca_certs=certifi.where()
     )
     for i in range(20):
         if es.ping():
             return es
-        print "Elasticsearch not up yet"
+        print("Elasticsearch not up yet")
         time.sleep(1)
-    print "Elasticsearch doesn't respond to ping"
+    print("Elasticsearch doesn't respond to ping")
     raise Exception()
 
 
@@ -41,7 +44,7 @@ def add_templates(force=False):
     for host in es.transport.hosts:
         hosts.append(host['host'])
 
-    print 'Connected to: %s' % ', '.join(hosts)
+    print('Connected to: %s' % ', '.join(hosts))
 
     # Script path.
     spath = os.path.dirname(__file__)
@@ -60,15 +63,15 @@ def add_templates(force=False):
             if tname in EXCLUDED:
                 continue
             try:
-                print 'Applying "%s" template...' % tname,
+                print('Applying "%s" template...' % tname, end=' ')
                 if not es.indices.exists_template(tname) or force:
                     es.indices.put_template(name=tname, body=template)
             except Exception:
-                print 'ERROR'
+                print('ERROR')
                 traceback.print_exc()
                 err = True
             else:
-                print 'OK'
+                print('OK')
     if err:
         raise Exception("Completed with errors")
 
