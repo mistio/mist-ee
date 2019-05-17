@@ -1,11 +1,11 @@
 # Changelog
-## v4.1.0 (17 May 2019)
+## v4.1.0 (21 May 2019)
 
 * Feature: Support RBAC on cloud locations
 * Feature: Add support for volumes in Packet clouds
 * Feature: Add support for volumes and machine provisioning in Aliyun ECS clouds
 * Feature: Support new OpenSSH key format
-* Feature: Set filesystem_type when creating volumes in DigitalOcean
+* Feature: Set filesystem type when creating volumes in DigitalOcean
 * Feature: Create and attach volume on OpenStack machine creation
 * Change: Refactor landing page, improving customizability and SEO
 * Change: Use OpenStack API v2.2
