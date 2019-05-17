@@ -1,6 +1,7 @@
 # Changelog
 ## v4.1.0 (17 May 2019)
 
+* Feature: Support RBAC on cloud locations
 * Feature: Add support for volumes in Packet clouds
 * Feature: Add support for volumes and machine provisioning in Aliyun ECS clouds
 * Feature: Support new OpenSSH key format
