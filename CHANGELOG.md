@@ -1,4 +1,25 @@
 # Changelog
+## v4.1.0 (21 May 2019)
+
+* Feature: Support RBAC on cloud locations
+* Feature: Add support for volumes in Packet clouds
+* Feature: Add support for volumes and machine provisioning in Aliyun ECS clouds
+* Feature: Support new OpenSSH key format
+* Feature: Set filesystem type when creating volumes in DigitalOcean
+* Feature: Create and attach volume on OpenStack machine creation
+* Change: Refactor landing page, improving customizability and SEO
+* Change: Use OpenStack API v2.2
+* Change: Machine-Key associations have their own DB collection, enhancing query performance
+* Change: Update date picker in schedule add form
+* Bugfix: Fix portal name & logo in notification emails
+* Bugfix: Fix deletion of multiple clouds from cloud list
+* Bugfix: Fix editing of schedule script params
+* Bugfix: Fix tag editing in lists
+* Bugfix: Fix price retrieval for GCE Asia regions
+* Bugfix: Avoid XML parse errors in xml-viewer in resource metadata sections
+* Bugfix: Fix port detection on OpenStack post machine create steps
+* Bugfix: Assign volume ownership on creation
+* Bugfix: Fix sidebar counter updates
 
 ## v4.0.3 (20 March 2019)
 
