@@ -188,9 +188,10 @@ build api:
 
 build nginx:
   <<: *docker_build_template
-  script:
+  before_script:
     - git submodule sync docker/nginx/static/ui/mist-rbac-behavior
     - git submodule update --init docker/nginx/static/ui/mist-rbac-behavior
+
 build gocky: *docker_build_template
 build logstash: *docker_build_template
 build elasticsearch-manage: *docker_build_template
