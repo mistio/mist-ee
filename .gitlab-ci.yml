@@ -186,11 +186,17 @@ build api:
     - docker_push $CI_PROJECT_NAME/$img:$CI_COMMIT_SHA $img
   dependencies: []
 
-build nginx: *docker_build_template
 build gocky: *docker_build_template
 build logstash: *docker_build_template
 build elasticsearch-manage: *docker_build_template
-
+build nginx:
+  <<: *docker_template
+  script:
+    - git submodule sync docker/nginx/static/ui/mist-rbac-behavior
+    - git submodule update --init docker/nginx/static/ui/mist-rbac-behavior
+    - export img=$(echo "$CI_JOB_NAME" | cut -d " " -f2)
+    - docker build -t $CI_PROJECT_NAME/$img:$CI_COMMIT_SHA docker/$img
+    - docker_push $CI_PROJECT_NAME/$img:$CI_COMMIT_SHA $img
 
 .docker_retag_template: &docker_retag_template
   <<: *docker_template

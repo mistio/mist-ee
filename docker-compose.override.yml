@@ -38,7 +38,7 @@ services:
       - ./insights:/opt/insights:rw
       - ./orchestration:/opt/orchestration:rw
       - ./auth:/opt/auth:rw
-      - ./cloudify_insights:/opt/cloudify_insights:rw
+      # - ./cloudify_insights:/opt/cloudify_insights:rw
   celery-gevent: *backend
   scheduler: *backend
   poller: *backend
@@ -47,7 +47,6 @@ services:
   hubshell: *backend
   api: *backend
   sockjs: *backend
-  insights-handler: *backend
   apply-migrations: *backend
 
   ui:
@@ -79,3 +78,8 @@ services:
   influxdb:
     volumes:
       - ./docker/influxdb:/etc/influxdb
+
+
+#  insights-handler:
+#    <<: *backend
+#    command: bin/wait-all python /opt/cloudify_insights/mist/cloudify_insights/handler.py
