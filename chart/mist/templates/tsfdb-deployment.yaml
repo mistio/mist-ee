@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "chart.fullname" . }}-swagger
+  name: {{ include "chart.fullname" . }}-tsfdb
   labels:
-    app: swagger
+    app: tsfdb
     chart: {{ include "chart.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -15,16 +15,21 @@ spec:
   template:
     metadata:
       labels:
-        app: swagger
+        app: tsfdb
         release: {{ .Release.Name }}
     spec:
+      imagePullSecrets:
+{{ toYaml .Values.image.secrets | indent 8 }}
       containers:
-      - name: swagger
+      - name: tsfdb
         env:
         - name: API_URL
           value: /api/v1/spec
-        image: mist/swagger-ui
+        image: {{ .Values.image.registry }}/tsfdb:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+        - name: fdb-config
+          mountPath: /etc/foundationdb/
         resources:
           limits:
             memory: 50Mi
@@ -32,6 +37,16 @@ spec:
           requests:
             memory: 20Mi
             cpu: 1m
+      volumes:
+      - name: fdb-config
+        configMap:
+          name: {{ include "chart.fullname" . }}-fdb-config
+          defaultMode: 420
+          items:
+          - key: cluster-file
+            path: fdb.cluster
+          - key: ca-file
+            path: ca.pem
 {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}

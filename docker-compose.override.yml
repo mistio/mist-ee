@@ -78,8 +78,9 @@ services:
   influxdb:
     volumes:
       - ./docker/influxdb:/etc/influxdb
-
-
+  tsfdb:
+    volumes:
+      - ./tsfdb:/usr/src/app
 #  insights-handler:
 #    <<: *backend
 #    command: bin/wait-all python /opt/cloudify_insights/mist/cloudify_insights/handler.py

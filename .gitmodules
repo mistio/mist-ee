@@ -10,6 +10,9 @@
 [submodule "tests"]
 	path = tests
 	url = ../mist.tests.git
+[submodule "tsfdb"]
+	path = tsfdb
+	url = ../tsfdb-server
 [submodule "rbac"]
 	path = rbac
 	url = ../mist.rbac.git
@@ -34,3 +37,4 @@
 [submodule "docker/nginx/static/ui/mist-rbac-behavior"]
 	path = docker/nginx/static/ui/mist-rbac-behavior
 	url = ../mist-rbac-behavior
+

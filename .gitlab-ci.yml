@@ -177,7 +177,6 @@ build api:
           .
     - docker_push $CI_PROJECT_NAME/api:$CI_COMMIT_SHA api
 
-
 .docker_build_template: &docker_build_template
   <<: *docker_template
   script:
@@ -216,6 +215,7 @@ retag ui: *docker_retag_template
 retag tests: *docker_retag_template
 retag manage manage/ui: *docker_retag_template
 retag elements: *docker_retag_template
+retag tsfdb: *docker_retag_template
 
 
 compose:

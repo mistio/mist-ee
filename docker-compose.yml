@@ -5,6 +5,18 @@ version: '2.0'
 
 services:
 
+  fdb:
+    image: mist/fdb
+    restart: on-failure:5
+    volumes:
+      - foundationdb:/var/lib/foundationdb/data:rw
+      - fdbetc:/etc/foundationdb/:rw
+
+  tsfdb:
+    image: $IMG_REGISTRY/tsfdb:$IMG_TAG
+    restart: on-failure:5
+    volumes:
+      - fdbetc:/etc/foundationdb/:rw
 
   mongodb:
     image: mongo:3.2
@@ -77,6 +89,7 @@ services:
       - rabbitmq
     volumes:
       - ./settings:$CONF_DIR/settings
+      - fdbetc:/etc/foundationdb/:ro
     environment:
       SETTINGS_FILE: $CONF_DIR/settings/settings.py
     stdin_open: true
@@ -174,6 +187,8 @@ services:
       - 9097:9097
     depends_on:
       - rabbitmq
+    volumes:
+      - fdbetc:/etc/foundationdb/:ro
 
 
   traefik:
@@ -206,3 +221,5 @@ volumes:
   elasticsearch: {}
   influxdb: {}
   mongodb: {}
+  foundationdb: {}
+  fdbetc: {}
