@@ -69,7 +69,7 @@ services:
 
   manage:
     # es-dev-server --hostname 0.0.0.0 --port 80 --app-index index.html --node-resolve --watch
-    command: /bin/sleep 36000 && npm install -g es-dev-server && es-dev-server --hostname 0.0.0.0 --port 80 --app-index index.html --node-resolve --watch
+    command: /bin/sleep 36000 #&& npm install -g es-dev-server && es-dev-server --hostname 0.0.0.0 --port 80 --app-index index.html --node-resolve --watch
     volumes:
       # - ./manage/ui:/ui:rw
       - ./manage/manage-app:/ui:rw
