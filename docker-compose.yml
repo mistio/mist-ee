@@ -197,10 +197,6 @@ services:
     image: $IMG_REGISTRY/manage/ui:$IMG_TAG
     command: nginx
 
-  elements:
-    image: $IMG_REGISTRY/elements:$IMG_TAG
-    command: nginx
-
 
 volumes:
   elasticsearch: {}

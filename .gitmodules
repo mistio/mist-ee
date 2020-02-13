@@ -25,9 +25,6 @@
 [submodule "auth"]
 	path = auth
 	url = ../mist.auth.git
-[submodule "elements"]
-	path = elements
-	url = ../mist-elements.git
 [submodule "cloudify_insights"]
 	path = cloudify_insights
 	url = ../mist.cloudify-insights.git
