@@ -25,9 +25,6 @@
 [submodule "auth"]
 	path = auth
 	url = ../mist.auth.git
-[submodule "cloudify_insights"]
-	path = cloudify_insights
-	url = ../mist.cloudify-insights.git
 [submodule "docker/nginx/static/ui/mist-rbac-behavior"]
 	path = docker/nginx/static/ui/mist-rbac-behavior
 	url = ../mist-rbac-behavior
