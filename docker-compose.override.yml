@@ -71,10 +71,6 @@ services:
     volumes:
       - ./manage/ui:/ui:rw
 
-  elements:
-    volumes:
-      - ./elements:/elements:rw
-
   influxdb:
     volumes:
       - ./docker/influxdb:/etc/influxdb
