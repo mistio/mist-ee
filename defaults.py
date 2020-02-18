@@ -23,7 +23,6 @@ PLUGINS = [
     'insights',
     'orchestration',
     'auth',
-    'cloudify_insights',
 ]
 
 EC2_SECURITYGROUP = {
