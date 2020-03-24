@@ -10,10 +10,10 @@ EMAIL_INFO = "info@avvan.id"
 EMAIL_SALES = "sales@avvan.id"
 EMAIL_SUPPORT = "support@avvan.id"
 EMAIL_NOTIFICATIONS = "notifications@avvan.id"
-CURRENCY = {
-    "sign": "Rp",
-    "rate": 13720.5
-}
+#CURRENCY = {
+#    "sign": "Rp",
+#    "rate": 13720.5
+#}
 ENABLE_MONITORING = True
 DOCS_URI = SUPPORT_URI = ''
 
