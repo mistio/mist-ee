@@ -4,4 +4,5 @@ PLUGINS = [
     'insights',
     'orchestration',
     'auth',
+    'pricing'
 ]
