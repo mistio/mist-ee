@@ -38,6 +38,7 @@ services:
       - ./insights:/opt/insights:rw
       - ./orchestration:/opt/orchestration:rw
       - ./auth:/opt/auth:rw
+      - ./pricing:/opt/pricing:rw
       # - ./cloudify_insights:/opt/cloudify_insights:rw
   celery-gevent: *backend
   scheduler: *backend
