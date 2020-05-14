@@ -23,6 +23,7 @@ PLUGINS = [
     'insights',
     'orchestration',
     'auth',
+    'pricing'
 ]
 
 EC2_SECURITYGROUP = {
