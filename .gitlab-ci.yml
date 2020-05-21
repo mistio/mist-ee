@@ -525,6 +525,7 @@ UI:insights:
 
 MP:multiprovisioning-1: *multiprovisioning_test_template
 MP:multiprovisioning-2: *multiprovisioning_test_template
+MP:multiprovisioning-3: *multiprovisioning_test_template
 
 #################### UNDEPLOY STAGE ####################
 
