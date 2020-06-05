@@ -1,5 +1,24 @@
 # Changelog
 
+## v4.3.4 (5 June 2020)
+
+ - Bugfix: Fix ordering of starred images in machine create form
+ - Bugfix: Fix CSV export
+ - Bugfix: Fix zone listing issue for non-owners (EE/HS only)
+ - Bugfix: Fix network deletion in OpenStack
+
+## v4.3.3 (25 May 2020)
+
+ - Bugfix: Fix provisioning on multi-host KVM when a host is down
+ - Bugfix: Include disk in KVM machine sizes
+ - Bugfix: Remove unnecessary scrollbars from dialogs
+ - Bugfix: Fix display of starred images in create machine form
+
+## v4.3.2 (21 May 2020)
+
+ - Change: Avoid dereferencing machine owner on clean, minor optimization
+ - Change: Increase AsyncHTTPClient timeouts
+
 ## v4.3.1 (19 May 2020)
 
 - Bugfix: Fix exception when provisioning GCE machines
@@ -30,7 +49,6 @@ This release greatly improves support for KVM. It's now possible to manage multi
 - Change: Show more info about DigitalOcean sizes, like in DO console
 - Bugfix: Fix cost estimation for Packet, AWS, Azure
 - Bugfix: Fix clone action in KVM
-
 
 ## v4.2.1 (17 December 2019)
 
