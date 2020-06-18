@@ -47,7 +47,7 @@ discover submodules:
   stage: build
   image: docker:18.09-git
   services:
-    - docker:18.09.7-dind
+    - docker:19.03.1-dind
   variables: &docker_variables
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: tcp://localhost:2375
