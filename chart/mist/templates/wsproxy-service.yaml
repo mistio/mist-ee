@@ -1,15 +1,15 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: {{ include "chart.fullname" . }}-insights-handler
+  name: {{ include "chart.fullname" . }}-wsproxy
   labels:
-    app: insights-handler
+    app: wsproxy
     chart: {{ include "chart.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
   ports:
-    - port: 80
+    - port: 8764
   selector:
-    app: insights-handler
+    app: wsproxy
     release: {{ .Release.Name }}

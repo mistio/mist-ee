@@ -8,8 +8,8 @@ COPY ./manage/ /opt/manage/
 COPY ./insights/ /opt/insights/
 COPY ./orchestration/ /opt/orchestration/
 COPY ./auth/ /opt/auth/
-COPY ./cloudify_insights/ /opt/cloudify_insights/
-RUN for plugin in rbac insights orchestration auth cloudify_insights; do pip install -e /opt/$plugin; pip install -r /opt/$plugin/requirements.txt 2>/dev/null || echo ok; done
+COPY ./pricing/ /opt/pricing/
+RUN for plugin in rbac insights orchestration auth pricing; do pip install -e /opt/$plugin; pip install -r /opt/$plugin/requirements.txt 2>/dev/null || echo ok; done
 RUN for plugin in manage; do pip install -e /opt/$plugin/src; done
 
 # Configure product defaults.

@@ -4,5 +4,5 @@ PLUGINS = [
     'insights',
     'orchestration',
     'auth',
-    'cloudify_insights',
+    'pricing'
 ]
