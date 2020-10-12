@@ -214,3 +214,5 @@ volumes:
   elasticsearch: {}
   influxdb: {}
   mongodb: {}
+  foundationdb: {}
+  fdbetc: {}

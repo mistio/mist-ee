@@ -76,7 +76,16 @@ services:
     volumes:
       - ./docker/influxdb:/etc/influxdb
 
+  #fdb:
+  #  image: mist/fdb
+  #  restart: on-failure:5
+  #  volumes:
+  #    - foundationdb:/var/lib/foundationdb/data:rw
+  #    - fdbetc:/etc/foundationdb/:rw
 
-#  insights-handler:
-#    <<: *backend
-#    command: bin/wait-all python /opt/cloudify_insights/mist/cloudify_insights/handler.py
+  #tsfdb:
+  #  image: $IMG_REGISTRY/tsfdb:$IMG_TAG
+  #  restart: on-failure:5
+  #  volumes:
+  #    - fdbetc:/etc/foundationdb/:rw
+  #    - ./tsfdb:/usr/src/app
