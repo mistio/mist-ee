@@ -123,6 +123,7 @@ data:
     INTERNAL_API_URL = "http://{{ include "chart.fullname" . }}-api"
     UI_TEMPLATE_URL = "http://{{ include "chart.fullname" . }}-ui"
     LANDING_TEMPLATE_URL = "http://{{ include "chart.fullname" . }}-landing"
+    MANAGE_TEMPLATE_URL = "http://{{ include "chart.fullname" . }}-manage"
     TRAEFIK_API = "http://{{ include "chart.fullname" . }}-traefik:8080"
     CILIA_TRIGGER_API = "http://{{ include "chart.fullname" . }}-api"
     GOCKY_HOST = "{{ include "chart.fullname" . }}-gocky"

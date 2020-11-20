@@ -31,8 +31,8 @@ spec:
             memory: {{ .Values.deployment.manage.resources.requests.memory | default "30Mi" }}
             cpu: {{ .Values.deployment.manage.resources.requests.cpu | default "10m" }}
           limits:
-            memory: {{ .Values.deployment.manage.resources.limits.memory | default "50Mi" }}
-            cpu: {{ .Values.deployment.manage.resources.limits.cpu | default "100m" }}
+            memory: {{ .Values.deployment.manage.resources.limits.memory | default "250Mi" }}
+            cpu: {{ .Values.deployment.manage.resources.limits.cpu | default "1000m" }}
 {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
