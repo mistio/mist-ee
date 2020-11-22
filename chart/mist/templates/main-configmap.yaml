@@ -68,7 +68,7 @@ data:
 
     {{ if .Values.rabbitmq.enabled -}}
     AMQP_URI = "{{ .Release.Name }}-rabbitmq:5672"
-    BROKER_URL = "amqp://{{ .Values.rabbitmq.rabbitmqUsername }}:{{ .Values.rabbitmq.rabbitmqPassword }}@{{ .Release.Name }}-rabbitmq:5672/"
+    BROKER_URL = "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Release.Name }}-rabbitmq:5672/"
     {{- else -}}
     AMQP_URI = "{{ .Values.rabbitmqExternal.host }}:{{ .Values.rabbitmqExternal.port }}"
     BROKER_URL = "amqp://{{ .Values.rabbitmqExternal.username }}:{{ .Values.rabbitmqExternal.password }}@{{ .Values.rabbitmqExternal.host }}:{{ .Values.rabbitmqExternal.port }}/"
@@ -123,6 +123,7 @@ data:
     INTERNAL_API_URL = "http://{{ include "chart.fullname" . }}-api"
     UI_TEMPLATE_URL = "http://{{ include "chart.fullname" . }}-ui"
     LANDING_TEMPLATE_URL = "http://{{ include "chart.fullname" . }}-landing"
+    MANAGE_TEMPLATE_URL = "http://{{ include "chart.fullname" . }}-manage"
     TRAEFIK_API = "http://{{ include "chart.fullname" . }}-traefik:8080"
     CILIA_TRIGGER_API = "http://{{ include "chart.fullname" . }}-api"
     GOCKY_HOST = "{{ include "chart.fullname" . }}-gocky"

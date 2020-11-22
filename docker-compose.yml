@@ -196,6 +196,9 @@ services:
   manage:
     image: $IMG_REGISTRY/manage/ui:$IMG_TAG
     command: nginx
+    expose:
+    - 80
+    - 8000
 
   huproxy:
     image: mist/huproxy
