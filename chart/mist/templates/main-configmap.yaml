@@ -66,7 +66,7 @@ data:
     STRIPE_SECRET_APIKEY = "{{ .Values.stripe.secretApiKey }}"
     STRIPE_PUBLIC_APIKEY = "{{ .Values.stripe.publicApiKey }}"
 
-    ACTIVE_DIRECTORY = "{{ .Values.activeDirectory }}"
+    LDAP_SETTINGS = "{{ .Values.ldapSettings }}"
 
     {{ if .Values.rabbitmq.enabled -}}
     AMQP_URI = "{{ .Release.Name }}-rabbitmq:5672"
