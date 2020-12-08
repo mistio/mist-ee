@@ -326,6 +326,7 @@ compose:
             --set http.host="$host" \
             --set stripe.publicApiKey="$STRIPE_PUBLIC_APIKEY" \
             --set stripe.secretApiKey="$STRIPE_SECRET_APIKEY" \
+            --set activeDirectory="$ACTIVE_DIRECTORY" \
             --set docker.host="$DOCKER_HOST" \
             --set docker.port="$DOCKER_PORT" \
             --set docker.key="$DOCKER_KEY" \
