@@ -262,6 +262,26 @@ Update `CORE_URI` in mist's settings (see URL section above).
 
 Run `docker-compose up -d`.
 
+### LDAP and Active Directory
+
+Mist ΕΕ supports authentication over LDAP with LDAP and Active Directory (AD) servers.
+To configure LDAP authentication, first login Mist as administrator and note your Mist organization name.
+Then, create the Mist teams that correspond to your LDAP or AD teams. For example, if you have a `dev` group in AD whose members need to access Mist, then create a `dev` team in Mist.
+Now edit `./settings/settings.py` and add the proper configuration:
+
+```
+LDAP_SETTINGS = {
+    'SERVER': 'XXX.XXX.XXX.XXX',  # IP and FQDN will both work
+    'OU': 'users',  # For LDAP enter organizational unit type. For AD ignore.
+    'DC': 'my.domain', # Main domain of LDAP and AD servers
+    'ORG_NAME': 'myMistOrg', # Mist org name which will authenticate over LDAP
+    'AD': True  # Set True when using AD. Set False for LDAP server.
+}
+```
+
+Finally, restart Mist to apply the configuration changes with:
+`docker-compose restart`
+Users from your groups will now be able log in Mist by clicking on `Sign in with LDAP` or `Sign in with Active Directory` in Mist's login page with their relevant username and password.
 
 ## Managing Mist
 
