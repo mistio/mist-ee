@@ -161,7 +161,7 @@ stripe:
   publicApiKey: ''
   secretApiKey: ''
 sendgridEmailNotificationsKey: ''
-ldapSettings: {}
+ldapSettings: ''
 
 # The (possibly multi-line) string given here, will be appended, as is, to the
 # `settings.py` file. This is a quick and dirty way of overriding options not
