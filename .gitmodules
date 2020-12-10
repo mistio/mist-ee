@@ -1,6 +1,9 @@
 [submodule "api"]
 	path = api
 	url = ../mist.api.git
+[submodule "api-v2"]
+	path = api-v2
+	url = ../mist-api-v2.git
 [submodule "ui"]
 	path = ui
 	url = ../mist.ui.git
@@ -37,4 +40,3 @@
 [submodule "pricing"]
 	path = pricing
 	url = ../mist.pricing.git
-

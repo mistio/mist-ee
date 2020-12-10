@@ -370,6 +370,7 @@ deploy test:
           certmanager.k8s.io/acme-challenge-type: dns01
           certmanager.k8s.io/acme-dns01-provider: mist-dns
       enableDevUsers: true
+      #jsBuild: false
 
 .deploy_review_template: &deploy_review_template
   <<: *deploy_template
@@ -542,7 +543,7 @@ MP:kvm-machine-create: *multiprovisioning_test_template
 MP:linode-machine-create: *multiprovisioning_test_template
 MP:lxd-machine-create: *multiprovisioning_test_template
 # MP:openstack-machine-create: *multiprovisioning_test_template
-MP:packet-machine-create: *multiprovisioning_test_template
+MP:equinix-metal-machine-create: *multiprovisioning_test_template
 MP:rackspace-machine-create: *multiprovisioning_test_template
 
 # Machine Provisioning tests #
@@ -560,7 +561,7 @@ VP:gce-volume-create: *multiprovisioning_test_template
   variables:
     GIT_STRATEGY: none
   script:
-    - helm uninstall $release
+    - helm uninstall $release -n $namespace
   allow_failure: true
   dependencies: []
 
@@ -572,7 +573,7 @@ undeploy test:
   variables:
     GIT_STRATEGY: none
     release: test-$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
-
+    namespace: test-$CI_PROJECT_NAME
 undeploy review:
   <<: *undeploy_template
   environment:
@@ -581,6 +582,7 @@ undeploy review:
   variables:
     GIT_STRATEGY: none
     release: $CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
+    namespace: $CI_PROJECT_NAME
   when: manual
   except:
     - master
