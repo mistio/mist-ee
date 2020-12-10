@@ -178,7 +178,6 @@ build api:
           .
     - docker_push $CI_PROJECT_NAME/api:$CI_COMMIT_SHA api
 
-
 .docker_build_template: &docker_build_template
   <<: *docker_template
   script:
@@ -242,7 +241,7 @@ compose:
 
 .deploy_template: &deploy_template
   stage: deploy
-  image: dtzar/helm-kubectl:2.16.1
+  image: dtzar/helm-kubectl:3.4.0
   before_script:
     - |
         set -e
@@ -311,12 +310,13 @@ compose:
             rm -rf $tls_tmpdir
           fi
 
-          helm init --client-only
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add mist-charts https://mist-charts.storage.googleapis.com/
           helm repo update
           helm dependency update ./chart/mist/
 
           helm upgrade --install --namespace $namespace \
-            --wait --timeout=600 \
+            --wait --timeout=10m \
             -f values.yaml \
             --set image.tag="$CI_COMMIT_SHA" \
             --set image.registry="$REGISTRY_IMAGE" \
@@ -542,7 +542,7 @@ MP:kvm-machine-create: *multiprovisioning_test_template
 MP:linode-machine-create: *multiprovisioning_test_template
 MP:lxd-machine-create: *multiprovisioning_test_template
 # MP:openstack-machine-create: *multiprovisioning_test_template
-MP:packet-machine-create: *multiprovisioning_test_template
+MP:equinix-metal-machine-create: *multiprovisioning_test_template
 MP:rackspace-machine-create: *multiprovisioning_test_template
 
 # Machine Provisioning tests #
@@ -556,11 +556,11 @@ VP:gce-volume-create: *multiprovisioning_test_template
 
 .undeploy_template: &undeploy_template
   stage: undeploy
-  image: dtzar/helm-kubectl:2.10.0
+  image: dtzar/helm-kubectl:3.4.0
   variables:
     GIT_STRATEGY: none
   script:
-    - helm delete --purge $release
+    - helm uninstall $release -n $namespace
   allow_failure: true
   dependencies: []
 
@@ -572,7 +572,7 @@ undeploy test:
   variables:
     GIT_STRATEGY: none
     release: test-$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
-
+    namespace: test-$CI_PROJECT_NAME
 undeploy review:
   <<: *undeploy_template
   environment:
@@ -581,6 +581,7 @@ undeploy review:
   variables:
     GIT_STRATEGY: none
     release: $CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG
+    namespace: $CI_PROJECT_NAME
   when: manual
   except:
     - master
@@ -622,3 +623,93 @@ prerelease:
   only:
     # only for references that match a prelease version string (v1.2.3-beta)
     - /^v\d+\.\d+\.\d+-.+$/
+
+helm_chart_release:
+  stage: release
+  image: mist/helm-automation
+
+  script:
+    - |
+        #! /usr/bin/env bash
+
+        gcloud auth activate-service-account --key-file=$GCLOUD_SERVICE_KEY
+        set -o errexit
+        set -o nounset
+        set -o pipefail
+        readonly REPO_URL=https://mist-charts.storage.googleapis.com/
+        readonly GCS_BUCKET=gs://mist-charts
+
+        main() {
+          if ! sync_repo chart "$GCS_BUCKET" "$REPO_URL"; then
+              log_error "Not all charts could be packaged and synced!"
+          fi
+        }
+
+        sync_repo() {
+          local repo_dir="${1?Specify repo dir}"
+          local bucket="${2?Specify repo bucket}"
+          local repo_url="${3?Specify repo url}"
+          local sync_dir="${repo_dir}-sync"
+          local index_dir="${repo_dir}-index"
+
+          echo "Syncing repo '$repo_dir'..."
+
+          mkdir -p "$sync_dir"
+          mkdir -p "$index_dir"
+
+          # Disable cache in requests and responses
+          gsutil -m setmeta -h "Cache-Control:no-cache" "$bucket"/*.tgz
+          gsutil -m setmeta -h "Cache-Control:no-cache" "$bucket"/index.yaml
+
+          # Copy the index.yaml file from the bucket.
+          if ! gsutil cp "$bucket/index.yaml" "$index_dir/index.yaml"; then
+            log_error "Exiting because unable to copy index locally. Not safe to proceed."
+            exit 1
+          fi
+
+          local return_value=0
+
+          # Loop around each chart and package.
+          for dir in "$repo_dir"/*; do
+            if helm dependency build "$dir"; then
+              helm package --destination "$sync_dir" "$dir"
+            else
+              log_error "Problem building dependencies. Skipping packaging of '$dir'."
+              return_value=1
+            fi
+          done
+
+          if helm repo index --url "$repo_url" --merge "$index_dir/index.yaml" "$sync_dir"; then
+
+            # Move updated index.yaml to sync folder so we don't push the old one again
+            mv -f "$sync_dir/index.yaml" "$index_dir/index.yaml"
+
+            # Push all the local chart tarballs to the bucket.
+            gsutil -m rsync "$sync_dir" "$bucket"
+
+            # Make sure index.yaml is synced last
+            gsutil cp "$index_dir/index.yaml" "$bucket"
+
+          else
+            log_error "Exiting because unable to update index. Not safe to push update."
+            exit 1
+          fi
+
+          ls -l "$sync_dir"
+
+          return "$return_value"
+        }
+
+        log_error() {
+          printf '\e[31mERROR: %s\n\e[39m' "$1" >&2
+        }
+
+        main
+  when: manual
+  only:
+    # only for references that match a version string (v1.2.3)
+    - /^v\d+\.\d+\.\d+$/
+  dependencies: []
+  except:
+    # Except branches, meaning it'll only apply to git tags
+    - branches
