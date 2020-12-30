@@ -543,6 +543,18 @@ deployment:
         memory: 1000Mi
         cpu: 2000m
 
+  # Dramatiq deployment settings.
+  dramatiq:
+    replicas: 1
+    autoscaling: *autoscaling
+    resources:
+      requests:
+        memory: 200Mi
+        cpu: 300m
+      limits:
+        memory: 400Mi
+        cpu: 1000m
+
   # Sockjs deployment settings.
   sockjs:
     replicas: 1
@@ -561,11 +573,11 @@ deployment:
     autoscaling: *autoscaling
     resources:
       requests:
-        memory: 30Mi
+        memory: 50Mi
         cpu: 10m
       limits:
-        memory: 50Mi
-        cpu: 100m
+        memory: 250Mi
+        cpu: 500m
 
   # Nginx deployment settings.
   nginx:
@@ -585,8 +597,8 @@ deployment:
     autoscaling: *autoscaling
     resources:
       requests:
-        memory: 20Mi
+        memory: 50Mi
         cpu: 10m
       limits:
-        memory: 50Mi
+        memory: 250Mi
         cpu: 200m

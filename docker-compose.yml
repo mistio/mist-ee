@@ -130,6 +130,10 @@ services:
     <<: *backend
     command: bin/wait-all bin/migrate
 
+  dramatiq:
+    <<: *backend
+    command: bin/wait-all bin/dramatiq
+
   ui:
     image: $IMG_REGISTRY/ui:$IMG_TAG
     command: sh /entry.sh
