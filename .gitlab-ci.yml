@@ -325,6 +325,7 @@ compose:
             --set http.host="$host" \
             --set stripe.publicApiKey="$STRIPE_PUBLIC_APIKEY" \
             --set stripe.secretApiKey="$STRIPE_SECRET_APIKEY" \
+            --set ldapSettings="$LDAP_SETTINGS" \
             --set docker.host="$DOCKER_HOST" \
             --set docker.port="$DOCKER_PORT" \
             --set docker.key="$DOCKER_KEY" \
@@ -514,7 +515,7 @@ UI:orchestration: *ui_test_template
 UI:insights:
   <<: *ui_test_template
   retry: 1
-
+UI:active-directory: *ui_test_template
 # Machine Provisioning tests #
 
 .multiprovisioning_test_template: &multiprovisioning_test_template
