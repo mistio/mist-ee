@@ -314,7 +314,6 @@ compose:
           helm repo add mist-charts https://mist-charts.storage.googleapis.com/
           helm repo update
           helm dependency update ./chart/mist/
-          echo "YOOOOO $LDAP_SETTINGS"
           helm upgrade --install --namespace $namespace \
             --wait --timeout=10m \
             -f values.yaml \
