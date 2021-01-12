@@ -314,7 +314,6 @@ compose:
           helm repo add mist-charts https://mist-charts.storage.googleapis.com/
           helm repo update
           helm dependency update ./chart/mist/
-
           helm upgrade --install --namespace $namespace \
             --wait --timeout=10m \
             -f values.yaml \
@@ -325,6 +324,11 @@ compose:
             --set http.host="$host" \
             --set stripe.publicApiKey="$STRIPE_PUBLIC_APIKEY" \
             --set stripe.secretApiKey="$STRIPE_SECRET_APIKEY" \
+            --set ldapSettings.SERVER="$AD_SERVER" \
+            --set ldapSettings.AD="True" \
+            --set ldapSettings.DC="$AD_DC" \
+            --set ldapSettings.ORG_NAME="$AD_ORG_NAME" \
+            --set ldapSettings.OU="users" \
             --set docker.host="$DOCKER_HOST" \
             --set docker.port="$DOCKER_PORT" \
             --set docker.key="$DOCKER_KEY" \
@@ -514,7 +518,7 @@ UI:orchestration: *ui_test_template
 UI:insights:
   <<: *ui_test_template
   retry: 1
-
+UI:active-directory: *ui_test_template
 # Machine Provisioning tests #
 
 .multiprovisioning_test_template: &multiprovisioning_test_template
