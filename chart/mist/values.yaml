@@ -599,32 +599,4 @@ deployment:
         cpu: 10m
       limits:
         memory: 250Mi
-<<<<<<< HEAD
-        cpu: 200m
-
-  # Manage deployment settings.
-  manage:
-    replicas: 1
-    autoscaling: *autoscaling
-    resources:
-      requests:
-        memory: 20Mi
-        cpu: 10m
-      limits:
-        memory: 50Mi
-        cpu: 200m
-
-  # Insight static elements deployment settings.
-  elements:
-    replicas: 1
-    autoscaling: *autoscaling
-    resources:
-      requests:
-        memory: 20Mi
-        cpu: 10m
-      limits:
-        memory: 50Mi
-        cpu: 200m
-=======
         cpu: 100m
->>>>>>> mist-ce/vpa-recommendations
