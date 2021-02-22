@@ -209,7 +209,6 @@ If running on anything other than `localhost`, you'll need to set the
 
     CORE_URI = "http://198.51.100.12"
 
-
 ### Mail settings
 
 In some cases, such as user registration, forgotten passwords, user invitations
@@ -222,7 +221,6 @@ If you wish to use a real SMTP server, edit `./settings/settings.py` and modify
 `MAILER_SETTINGS`.
 
 Don't forget to restart docker-compose for changes to take effect.
-
 
 ### TLS settings
 
@@ -263,31 +261,48 @@ Update `CORE_URI` in mist's settings (see URL section above).
 Run `docker-compose up -d`.
 
 ### LDAP and Active Directory
-
-Mist ΕΕ supports authentication over LDAP with LDAP and Active Directory (AD) servers.
-To configure LDAP authentication, first login Mist as administrator and note your Mist organization name.
-Then, create the Mist teams that correspond to your LDAP or AD teams. For example, if you have a `dev` group in AD whose members need to access Mist, then create a `dev` team in Mist.
+Mist ΕΕ supports authentication over LDAP with LDAP and Active Directory (AD) servers. To configure LDAP authentication:
+First, log in Mist as administrator and note your Mist organization name. Then create the Mist teams that correspond to your LDAP or AD teams. For example, if you have a `dev` group in AD whose members need to access Mist, then create a `dev` team in Mist.
 Now edit `./settings/settings.py` and add the proper configuration:
 
 ```
 LDAP_SETTINGS = {
     'SERVER': 'XXX.XXX.XXX.XXX',  # IP and FQDN will both work
     'OU': 'users',  # For LDAP enter organizational unit type. For AD ignore.
-    'DC': 'my.domain', # Main domain of LDAP and AD servers
-    'ORG_NAME': 'myMistOrg', # Mist org name which will authenticate over LDAP
+    'DC': 'my.domain',  # Main domain of LDAP and AD servers
+    'ORG_NAME': 'myMistOrg',  # Mist org name which will authenticate over LDAP
     'AD': True  # Set True when using AD. Set False for LDAP server.
 }
 ```
+Finally, restart Mist to apply the configuration changes with `docker-compose restart`. 
 
-Finally, restart Mist to apply the configuration changes with:
-`docker-compose restart`
 Users from your groups will now be able log in Mist by clicking on `Sign in with LDAP` or `Sign in with Active Directory` in Mist's login page with their relevant username and password.
+
+### Single-sign-on with Microsoft 365
+
+Mist EE supports SSO with MS 365 accounts over Azure AD OAuth 2.0. To configure it, log in to Azure's web portal and follow the steps of registering an app as shown [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app).
+
+A few things to note:
+
+1. In the configure platform step choose **Web application**. The redirect URI should be `Mist_CORE_URI/social_auth/complete/azuread-oauth2`. See in the paragraphs above how to set Mist's `CORE_URI`.
+1. When creating the client secret, copy the **Value**. It will be needed later.
+1. In the API Permissions section, make sure the permissions are set to `User.Read` or `User.ReadBasic.All`.
+1. Copy the **Application ID** from the Overview section.
+
+With the Application ID and secret value at hand, edit Mist's configuration at `./settings/settings.py`
+
+```
+ALLOW_SIGNIN_MS365 = True
+ALLOW_SIGNUP_MS365 = True  # Set to false if you don't wish users to sign up with MS 365
+SOCIAL_AUTH_AZUREAD_OAUTH2_KEY = "myApplicationID"
+SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET = "mySecretValue"
+```
+
+Finally, restart Mist to apply the configuration changes with `docker-compose restart`.
 
 ## Managing Mist
 
-Mist is managed using `docker-compose`. Look that up for details. Some
-useful commands follow. Keep in mind that you need to run these from inside the
-directory containing the `docker-compose.yml` file:
+Mist is managed using `docker-compose`. Look that up for details. Some useful commands follow. Keep in mind that you need to run these from inside the directory containing the `docker-compose.yml` file:
 
     # See status of all applications
     docker-compose ps
