@@ -199,17 +199,14 @@ Any changes to the `./settings/settings.py` require a restart to take effect:
 
     docker-compose restart
 
-
-### Required configuration
-
-#### URL
+### URL (required)
 
 If running on anything other than `localhost`, you'll need to set the
 `CORE_URI` setting in `./settings/settings.py`. Example:
 
     CORE_URI = "http://198.51.100.12"
 
-### Mail settings
+### Mail settings (recommended)
 
 In some cases, such as user registration, forgotten passwords, user invitations
 etc, mist needs to send emails. By default, mist is configured to use a
@@ -222,7 +219,7 @@ If you wish to use a real SMTP server, edit `./settings/settings.py` and modify
 
 Don't forget to restart docker-compose for changes to take effect.
 
-### TLS settings
+### TLS settings (recommended)
 
 This section applies if you've installed mist by using the `docker-compose.yml`
 file of a mist release.
@@ -260,7 +257,7 @@ Update `CORE_URI` in mist's settings (see URL section above).
 
 Run `docker-compose up -d`.
 
-### LDAP and Active Directory
+### LDAP and Active Directory (optional)
 Mist ΕΕ supports authentication over LDAP with LDAP and Active Directory (AD) servers. To configure LDAP authentication:
 First, log in Mist as administrator and note your Mist organization name. Then create the Mist teams that correspond to your LDAP or AD teams. For example, if you have a `dev` group in AD whose members need to access Mist, then create a `dev` team in Mist.
 Now edit `./settings/settings.py` and add the proper configuration:
@@ -278,7 +275,7 @@ Finally, restart Mist to apply the configuration changes with `docker-compose re
 
 Users from your groups will now be able log in Mist by clicking on `Sign in with LDAP` or `Sign in with Active Directory` in Mist's login page with their relevant username and password.
 
-### Single-sign-on with Microsoft 365
+### Single-sign-on with Microsoft 365 (optional)
 
 Mist EE supports SSO with MS 365 accounts over Azure AD OAuth 2.0. To configure it, log in to Azure's web portal and follow the steps of registering an app as shown [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app).
 
