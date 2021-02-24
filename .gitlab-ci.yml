@@ -321,6 +321,7 @@ compose:
             --set image.registry="$REGISTRY_IMAGE" \
             --set image.secrets[0].name="$image_secret_name" \
             --set http.host="$host" \
+            --set vault.token="$VAULT_TOKEN" \
             --set stripe.publicApiKey="$STRIPE_PUBLIC_APIKEY" \
             --set stripe.secretApiKey="$STRIPE_SECRET_APIKEY" \
             --set ldapSettings.SERVER="$AD_SERVER" \
@@ -329,6 +330,7 @@ compose:
             --set ldapSettings.ORG_NAME="$AD_ORG_NAME" \
             --set ldapSettings.OU="users" \
             --set docker.host="$DOCKER_HOST" \
+            --set vault.token="$VAULT_TOKEN" \
             --set docker.port="$DOCKER_PORT" \
             --set docker.key="$DOCKER_KEY" \
             --set docker.cert="$DOCKER_CERT" \
@@ -453,6 +455,7 @@ API:main:machines: *api_test_template
 API:main:networks: *api_test_template
 API:main:schedules: *api_test_template
 API:main:scripts: *api_test_template
+API:main:secrets: *api_test_template
 API:main:teams: *api_test_template
 API:main:ip_whitelisting: *api_test_template
 API:main:volumes: *api_test_template
