@@ -306,7 +306,6 @@ compose:
             -f values.yaml \
             --set image.tag="$CI_COMMIT_SHA" \
             --set image.registry="$REGISTRY_IMAGE" \
-            --set image.pullPolicy=IfNotPresent \
             --set image.secrets[0].name="$image_secret_name" \
             --set http.host="$host" \
             --set vault.token="$VAULT_TOKEN" \
@@ -533,6 +532,7 @@ MP:lxd-machine-create: *multiprovisioning_test_template
 # MP:openstack-machine-create: *multiprovisioning_test_template
 MP:equinix-metal-machine-create: *multiprovisioning_test_template
 MP:rackspace-machine-create: *multiprovisioning_test_template
+MP:cloudsigma-machine-create: *multiprovisioning_test_template
 
 # Machine Provisioning tests #
 VP:aliyun-volume-create: *multiprovisioning_test_template
@@ -540,6 +540,7 @@ VP:azure-volume-create: *multiprovisioning_test_template
 VP:digital-ocean-volume-create: *multiprovisioning_test_template
 VP:ec2-volume-create: *multiprovisioning_test_template
 VP:gce-volume-create: *multiprovisioning_test_template
+VP:cloudsigma-volume-create: *multiprovisioning_test_template
 # VP:openstack-volume-create: *multiprovisioning_test_template
 #################### UNDEPLOY STAGE ####################
 
