@@ -8,7 +8,7 @@ PLUGINS = [
 ]
 
 UGLY_RBAC = """window.rbac = {
-    checkPerm: function (action, rtype, rid, org, user) {
+    checkPerm: function (rtype, action, rid, org, user) {
         // rtype is required
         if (!rtype) {
             console.error('checkPerm: no resource type defined');
