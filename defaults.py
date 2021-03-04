@@ -105,7 +105,7 @@ UGLY_RBAC = """window.rbac = {
                 return returnValue;
             }
             // user is not owner or ownership is disabled, continue with getting tags
-            if (model[rtype + 's'] && model[rtype + 's'][rid].tags) {
+            if (model[rtype + 's'] && model[rtype + 's'][rid] && model[rtype + 's'][rid].tags) {
                 rtags = model[rtype + 's'][rid].tags;
             }
 
