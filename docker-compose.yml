@@ -114,6 +114,12 @@ services:
     expose:
       - 80
 
+  api-v2:
+    <<: *backend
+    command: uwsgi --http 0.0.0.0:8080 --wsgi-file v2/mist_api_v2/__main__.py --callable application --master --processes 8 --max-requests 100 --honour-stdin
+    expose:
+      - 8080
+
   sockjs:
     <<: *backend
     command: bin/wait-all bin/sockjs
@@ -123,6 +129,10 @@ services:
   apply-migrations:
     <<: *backend
     command: bin/wait-all bin/migrate
+
+  dramatiq:
+    <<: *backend
+    command: bin/wait-all bin/dramatiq
 
   ui:
     image: $IMG_REGISTRY/ui:$IMG_TAG
@@ -156,7 +166,7 @@ services:
 
 
   influxdb:
-    image: influxdb
+    image: influxdb:1.8.4
     environment:
       INFLUXDB_DB: telegraf
       INFLUXDB_BIND_ADDRESS: "0.0.0.0:8088"
@@ -212,6 +222,8 @@ services:
     image: mist/wsproxy
     expose:
       - 8764
+
+
 
 volumes:
   elasticsearch: {}

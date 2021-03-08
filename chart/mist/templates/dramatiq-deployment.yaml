@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "chart.fullname" . }}-hubshell
+  name: {{ include "chart.fullname" . }}-dramatiq
   labels:
-    app: hubshell
+    app: dramatiq
     chart: {{ include "chart.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.deployment.dramatiq.replicas | default "1" }}
   selector:
     matchLabels:
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: hubshell
+        app: dramatiq
         release: {{ .Release.Name }}
       annotations:
         # Trigger modification of deployment & restart of pods if config changes.
@@ -24,18 +24,18 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.image.secrets | indent 8 }}
       containers:
-      - name: hubshell
+      - name: dramatiq
         args:
-        - bin/hubshell
+        - bin/dramatiq
         image: {{ .Values.image.registry }}/api:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           requests:
-            memory: 80Mi
-            cpu: 10m
+            memory: {{ .Values.deployment.dramatiq.resources.requests.memory | default "500Mi" }}
+            cpu: {{ .Values.deployment.dramatiq.resources.requests.cpu | default "100m" }}
           limits:
-            memory: 240Mi
-            cpu: 500m
+            memory: {{ .Values.deployment.dramatiq.resources.limits.memory | default "1000Mi" }}
+            cpu: {{ .Values.deployment.dramatiq.resources.limits.cpu | default "2000m" }}
         volumeMounts:
         - name: {{ .Values.productShortName }}-config
           mountPath: /etc/{{ .Values.productShortName }}/settings/settings.py

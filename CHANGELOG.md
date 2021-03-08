@@ -1,5 +1,32 @@
 # Changelog
 
+## v4.4.1 (4 Mar 2021)
+
+ - Bugfix: Pin influxdb image to v1.8.4
+ - Bugfix: Fix display of tags with empty value
+ - Bugfix: Fix constraint enforcement on create machine form (EE/HS only)
+ - Bugfix: Do not display sign in disabled message when MS365 SSO is the only one available (EE only)
+ - Change: Update requests & limits in helm chart
+
+## v4.4.0 (19 Feb 2021)
+
+ - Change: Upgrade to Polymer3 / Web Components v1
+ - Feature: Add support for CloudSigma clouds
+ - Feature: Use Monaco editor when viewing or editing code or markup
+ - Feature: Add RBAC on images (EE/HS only)
+ - Feature: Add support for Microsoft 365 sign on (EE only)
+ - Feature: Hide sidebar sections when the user has no permission to access them (EE/HS only)
+ - Feature: Add power\_cycle action for DigitalOcean
+ - Feature: Extend supported constraints on machine size
+ - Feature: Add rename & clone actions for vSphere machines
+ - Feature: Introduce API v2 (experimental)
+ - Feature: Add support for volumes in Linode
+ - Change: Open shell in new window, rewrite ssh backend in Golang
+ - Change: Support Linode API v4
+ - Change: Rename Packet to EquinixMetal
+ - Change: Drop experimental support for Gig G8 clouds
+ - Bugfix: Numerous minor bugfixes & UX improvements
+
 ## v4.3.8 (26 Aug 2020)
 
  - Bugfix: Fix machine provisioning issue on OpenStack

@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "chart.fullname" . }}-hubshell
+  name: {{ include "chart.fullname" . }}-api-v2
   labels:
-    app: hubshell
+    app: api-v2
     chart: {{ include "chart.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.deployment.api.replicas | default "1" }}
   selector:
     matchLabels:
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: hubshell
+        app: api-v2
         release: {{ .Release.Name }}
       annotations:
         # Trigger modification of deployment & restart of pods if config changes.
@@ -24,18 +24,26 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.image.secrets | indent 8 }}
       containers:
-      - name: hubshell
-        args:
-        - bin/hubshell
+      - name: api-v2
         image: {{ .Values.image.registry }}/api:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args:
+        - /usr/local/bin/uwsgi
+        - --plugins=python3
+        - --http=0.0.0.0:8080
+        - --wsgi-file=v2/mist_api_v2/__main__.py
+        - --callable=application
+        - --master
+        - --processes=8
+        - --max-requests=100
+        - --honour-stdin
         resources:
           requests:
-            memory: 80Mi
-            cpu: 10m
+            memory: {{ .Values.deployment.api.resources.requests.memory | default "100Mi" }}
+            cpu: {{ .Values.deployment.api.resources.requests.cpu | default "50m" }}
           limits:
-            memory: 240Mi
-            cpu: 500m
+            memory: {{ .Values.deployment.api.resources.limits.memory | default "1000Mi" }}
+            cpu: {{ .Values.deployment.api.resources.limits.cpu | default "1000m" }}
         volumeMounts:
         - name: {{ .Values.productShortName }}-config
           mountPath: /etc/{{ .Values.productShortName }}/settings/settings.py
