@@ -1,5 +1,3 @@
-
-<style is="custom-style">
     html {
         --app-background-color: rgb(236, 236, 236);
 
@@ -52,10 +50,10 @@
         --app-header-background-rear-layer: {
             background-color: rgb(0, 102, 153);
         };
-    };
-    --app-header-shadow: {
-        box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.2);
-        height: 10px;
-        bottom: -10px;
-    };
-</style>
+
+        --app-header-shadow: {
+            box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.2);
+            height: 10px;
+            bottom: -10px;
+        };
+}
