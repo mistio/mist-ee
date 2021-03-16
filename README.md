@@ -265,7 +265,7 @@ Now edit `./settings/settings.py` and add the proper configuration:
 ```
 LDAP_SETTINGS = {
     'SERVER': 'XXX.XXX.XXX.XXX',  # IP and FQDN will both work
-    'OU': 'IT,Employee',  # For LDAP enter Organizational Unit name. For multiple OU's separate with a comma. For AD ignore.
+    'OU': 'IT,Employee',  # For LDAP enter Organizational Unit name. For nested OU's separate with a comma. If you have members in separate OU's then add them as a list: ['Devops,Employee', 'QA,Tester,Employee']. For AD ignore.
     'DC': 'my.domain',  # Main domain of LDAP and AD servers
     'ORG_NAME': 'myMistOrg',  # Mist org name which will authenticate over LDAP
     'AD': True  # Set True when using AD. Set False for LDAP server.
