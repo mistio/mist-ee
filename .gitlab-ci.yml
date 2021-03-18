@@ -215,7 +215,6 @@ retag landing: *docker_retag_template
 retag ui: *docker_retag_template
 retag tests: *docker_retag_template
 retag manage manage/ui: *docker_retag_template
-retag tsfdb: *docker_retag_template
 
 
 compose:
@@ -513,6 +512,7 @@ UI:rbac-1/4: *ui_test_template
 UI:rbac-2/4: *ui_test_template
 UI:rbac-3/4: *ui_test_template
 UI:rbac-4/4: *ui_test_template
+UI:constraints: *ui_test_template
 UI:orchestration: *ui_test_template
 UI:insights:
   <<: *ui_test_template
