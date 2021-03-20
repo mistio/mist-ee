@@ -189,6 +189,10 @@ build api:
 build gocky: *docker_build_template
 build logstash: *docker_build_template
 build elasticsearch-manage: *docker_build_template
+build huproxy: *docker_build_template
+build wsproxy: *docker_build_template
+
+
 build nginx:
   <<: *docker_template
   script:
