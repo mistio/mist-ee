@@ -72,7 +72,8 @@ data:
       'ORG_NAME': "{{ .Values.ldapSettings.ORG_NAME }}",
       'AD': "{{ .Values.ldapSettings.AD }}"
     }
-
+    ALLOW_SIGNIN_CILOGON = True
+    ALLOW_SIGNUP_CILOGON = True
     {{ if .Values.rabbitmq.enabled -}}
     AMQP_URI = "{{ .Release.Name }}-rabbitmq:5672"
     BROKER_URL = "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Release.Name }}-rabbitmq:5672/"
