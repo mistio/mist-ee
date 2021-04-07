@@ -73,7 +73,7 @@ data:
       'AD': "{{ .Values.ldapSettings.AD }}"
     }
     ALLOW_SIGNIN_CILOGON = True
-    ALLOW_SIGNUP_CILOGON = True
+    ALLOW_SIGNUP_CILOGON = False
     SOCIAL_AUTH_CILOGON_OAUTH2_KEY = "cilogon:/client_id/7736935ccc1dfc779013a4206ca405ea"
     SOCIAL_AUTH_CILOGON_OAUTH2_SECRET = "ZVSDufYc2Oi-0-RMQNwDL2C5k5xqKZlgvXu0s05edrRmFo0R_8a-S6V0gMl5jVvwNGKlrpWfKe7zRZatrznpTw"
     {{ if .Values.rabbitmq.enabled -}}
