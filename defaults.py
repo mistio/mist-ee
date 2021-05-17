@@ -1,3 +1,5 @@
+PORTAL_NAME = "Mist EE"
+
 PLUGINS = [
     'rbac',
     'manage',
