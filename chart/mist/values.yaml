@@ -132,6 +132,9 @@ auth:
   github:
     key: ''
     secret: ''
+  ms365:
+    key: 'b153277c-d972-401a-be6f-a1cd7f0d5a33'
+    secret: '8xqe_-3.lX8zLeGCD_0JO1xZjxJ-u-lA8q'
 backup:
   key: ''
   secret: ''
