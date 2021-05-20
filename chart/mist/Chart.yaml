@@ -1,5 +1,17 @@
-name: mist
-description: A Helm Chart for Mist CE.
-version: 0.1.1
+name: mist-ee
+description: A Helm Chart for Mist EE.
+version: $CHART_VERSION
+appVersion: "$CHART_VERSION"
 apiVersion: v1
 icon: https://raw.githubusercontent.com/mistio/mist.ui/master/assets/app-icon-32.png
+dependencies:
+  - alias: rabbitmq
+    condition: rabbitmq.deploy
+    repository: https://charts.bitnami.com/bitnami
+    name: rabbitmq
+    version: 8.15.0
+  - alias: mongodb
+    condition: mongodb.deploy
+    repository: https://charts.bitnami.com/bitnami
+    name: mongodb
+    version: 10.0.5

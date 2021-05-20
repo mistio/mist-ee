@@ -1,5 +1,33 @@
 # Changelog
 
+## v4.5.0 (20 May 2021)
+
+ - Feature: Add read-only objectstorage support for AWS & OpenStack clouds
+ - Feature: Extend size & field constraints, enabling owners to configure available create-machine form fields & sizes (EE/HS only)
+ - Feature: Web UI for configuring constraints (EE/HS only)
+ - Feature: Helm chart
+ - Change: Support Ansible 2.0, run playbooks in runner container
+ - Change: Do not require password when creating API token, notify user by email
+ - Change: Upgrade RabbitMQ, remove Memcached
+ - Change: Make portal name configurable in email subjects & bodies
+
+## v4.4.5 (25 Apr 2021)
+
+ - Bugfix: Fix post-deploy ssh login
+ - Bugfix: Use num of cpu cores in Equnix CloudSize object
+ - Bugfix: Allow monitoring API calls on terminated machines
+ - Bugfix: Update RBAC mappings after adding machine in KVM/Other cloud (EE/HS only)
+ - Bugfix: Fix excessive log filtering for non owners (EE/HS only)
+ - Change: Use double quotes for exact match & support math operators in APIv2 calls
+
+## v4.4.4 (14 Apr 2021)
+
+ - Bugfix: Fix validation error when adding new host in KVM clouds
+ - Bugfix: Remember custom sort order & field widths in lists
+ - Bugfix: Always fetch permissions & constraints in machine-create form
+ - Bugfix: Prevent occasional exceptions when listing images in vSphere
+ - Change: Dont use asyncio by default when listing vSphere nodes
+
 ## v4.4.3 (1 Apr 2021)
 
  - Change: Add support for CI Logon SSO (EE only)

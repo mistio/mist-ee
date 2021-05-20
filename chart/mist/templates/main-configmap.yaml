@@ -50,7 +50,6 @@ data:
       {{- end }}
     }
 
-    TSFDB_URI = {{ if .Values.tsfdb.enableSubchart }} "http://{{ include "chart.fullname" . }}-tsfdb:8080" {{ else }} "" {{ end }}
     INFLUX = {
       {{- if .Values.influxdb.host }}
         'host': "http://{{ .Values.influxdb.host }}:{{ .Values.influxdb.port }}",
@@ -73,7 +72,7 @@ data:
       'AD': "{{ .Values.ldapSettings.AD }}"
     }
 
-    {{ if .Values.rabbitmq.enabled -}}
+    {{ if .Values.rabbitmq.deploy -}}
     AMQP_URI = "{{ .Release.Name }}-rabbitmq:5672"
     BROKER_URL = "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Release.Name }}-rabbitmq:5672/"
     {{- else -}}
@@ -95,10 +94,10 @@ data:
 
     DEFAULT_MONITORING_METHOD = "{{ .Values.monitoring.defaultMethod }}"
 
-  {{- if .Values.mongodb.host }}
-    MONGO_URI = "{{ .Values.mongodb.host }}{{ if .Values.mongodb.port }}:{{ .Values.mongodb.port }}{{ end }}"
-  {{- else }}
+  {{- if .Values.mongodb.deploy }}
     MONGO_URI = "{{ .Release.Name }}-mongodb:27017"
+  {{- else }}
+    MONGO_URI = "{{ .Values.mongodb.host }}{{ if .Values.mongodb.port }}:{{ .Values.mongodb.port }}{{ end }}"
   {{- end }}
 
     GITHUB_BOT_TOKEN = "{{ .Values.githubBotToken }}"
