@@ -219,5 +219,4 @@ volumes:
   elasticsearch: {}
   influxdb: {}
   mongodb: {}
-  foundationdb: {}
-  fdbetc: {}
+  victoria-metrics: {}
