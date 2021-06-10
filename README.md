@@ -150,8 +150,6 @@ be downloaded and started in the background.
 Run `docker-compose ps`. All containers should be in the UP state, except
 shortlived container elasticsearch-manage.
 
-Linode users can quickly set up Mist through Linode's One-Click App Marketplace. You can find Mist [here](https://www.linode.com/marketplace/apps/mist/mist-cloud-management-platform/) and a video about how it works [here](https://youtu.be/kPr-LFucNSo).
-
 ### Kubernetes cluster
 Add the mist chart repository and fetch available charts
 ```
