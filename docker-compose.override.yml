@@ -31,7 +31,7 @@ services:
     volumes:
       - ./keys:/keys
 
-  celery-prefork: &backend
+  scheduler: &backend
     volumes:
       - ./defaults.py:$CONF_DIR/defaults.py:ro
       - ./api:/mist.api:rw
@@ -42,12 +42,6 @@ services:
       - ./orchestration:/opt/orchestration:rw
       - ./auth:/opt/auth:rw
       - ./pricing:/opt/pricing:rw
-      # - ./cloudify_insights:/opt/cloudify_insights:rw
-  celery-gevent: *backend
-  scheduler: *backend
-  poller: *backend
-  cilia: *backend
-  beat: *backend
   hubshell: *backend
   api: *backend
   api-v2: *backend
