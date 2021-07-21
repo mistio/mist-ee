@@ -1,4 +1,5 @@
 PORTAL_NAME = "Mist EE"
+DEFAULT_MONITORING_METHOD = 'telegraf-victoriametrics'
 
 PLUGINS = [
     'rbac',
