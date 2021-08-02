@@ -1,5 +1,43 @@
 # Changelog
 
+## v4.5.5 (27 Jul 2021)
+
+ - Bugfix: Prevent loss of hosts when disabling KVM clouds
+ - Bugfix: Fix support of multiple locations & volume types on OpenStack clouds
+ - Bugfix: Fix network listing on OpenStack when IPv6 subnet exists
+ - Bugfix: Fix machine provisioning issue on OpenStack when attaching existing volume
+ - Bugfix: Update RBAC mappings for images & locations when cloud added by non-owner (EE/HS only)
+
+## v4.5.4 (15 Jun 2021)
+
+ - Bugfix: Fix clone action for vSphere machines
+ - Bugfix: Improve snapshot dialog for vSphere machines
+ - Change: Support security group selection when creating OpenStack machines
+ - Change: Revamp check_size implementation (EE/HS only)
+
+## v4.5.3 (10 Jun 2021)
+
+  - Bugfix: Declare dramatiq broker on every actor
+  - Bugfix: Get cached_machines before creating the machine, closes(#120)
+  - Bugfix: Fix schedule editing
+  - Bugfix: Fix bug when size disk is absent for check_size (EE/HS only)
+  - Change: Update snapshots dialog for vSphere machines
+  - Change: Add more tests on constraints (EE/HS only)
+
+## v4.5.2 (1 Jun 2021)
+
+  - Bugfix: Fix constraints field & expiration output
+  - Change: Don't update creation time on reboot for Azure machines
+  - Change: Add constraints tests (EE/HS only)
+  - Change: Improve apiv2 create machine spec
+  
+## v4.5.1 (26 May 2021)
+
+ - Bugfix: Fix DNS hostname on provisioning
+ - Change: Improve list_images performance on vSphere/vCenter clouds
+ - Change: Add human friendly name to custom sizes (EE/HS only)
+ - Change: Run update_mappings task on Dramatiq runner (EE/HS only)
+
 ## v4.5.0 (20 May 2021)
 
  - Feature: Add read-only objectstorage support for AWS & OpenStack clouds

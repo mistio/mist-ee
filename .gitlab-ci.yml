@@ -328,6 +328,7 @@ compose:
 
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo add mist-charts https://mist-charts.storage.googleapis.com/
+          helm repo add vm https://victoriametrics.github.io/helm-charts/
           helm repo update
           helm dependency update ./chart/mist/
           helm upgrade --install --namespace $namespace \
@@ -529,7 +530,8 @@ UI:rbac-1/4: *ui_test_template
 UI:rbac-2/4: *ui_test_template
 UI:rbac-3/4: *ui_test_template
 UI:rbac-4/4: *ui_test_template
-UI:constraints: *ui_test_template
+UI:constraints_field_size: *ui_test_template
+UI:constraints_expiration: *ui_test_template
 UI:orchestration: *ui_test_template
 UI:insights:
   <<: *ui_test_template
@@ -614,7 +616,7 @@ undeploy review:
 release: &release_template
   when: manual
   stage: release
-  image: python:2.7-alpine
+  image: python:3.8-alpine
   before_script:
     - apk add --update libmagic openssl
     - pip install requests python-magic
