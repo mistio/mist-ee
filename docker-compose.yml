@@ -65,47 +65,50 @@ services:
       API_URL: /api/v1/spec
     restart: on-failure:5
 
-
-  scheduler: &backend
+  apply-migrations: &boot
     image: $IMG_REGISTRY/api:$IMG_TAG
     depends_on:
       - mongodb
       - elasticsearch
       - rabbitmq
+      - vault-init
     volumes:
       - ./settings:$CONF_DIR/settings
+      - approle:/approle
     environment:
       SETTINGS_FILE: $CONF_DIR/settings/settings.py
     stdin_open: true
     tty: true
     restart: on-failure:5
-    command: bin/wait-all bin/scheduler
+    command: bin/wait-all bin/migrate
+
+  scheduler: &backend
+    <<: *boot
+    depends_on:
+      - apply-migrations
+    command: sh -c "while ping -c1 apply-migrations &> /dev/null; do sleep 1; done; echo \"Migration job finished!\" && bin/wait-all bin/scheduler"
 
   api:
     <<: *backend
-    command: bin/wait-all bin/uwsgi
+    command: sh -c "while ping -c1 apply-migrations &> /dev/null; do sleep 1; done; echo \"Migration job finished!\" && bin/wait-all bin/uwsgi"
     expose:
       - 80
 
   api-v2:
     <<: *backend
-    command: uwsgi --http 0.0.0.0:8080 --wsgi-file v2/mist_api_v2/__main__.py --callable application --master --processes 8 --max-requests 100 --honour-stdin
+    command: sh -c "while ping -c1 apply-migrations &> /dev/null; do sleep 1; done; echo \"Migration job finished!\" && uwsgi --http 0.0.0.0:8080 --wsgi-file v2/mist_api_v2/__main__.py --callable application --master --processes 8 --max-requests 100 --honour-stdin"
     expose:
       - 8080
 
   sockjs:
     <<: *backend
-    command: bin/wait-all bin/sockjs
+    command: sh -c "while ping -c1 apply-migrations &> /dev/null; do sleep 1; done; echo \"Migration job finished!\" && bin/wait-all bin/sockjs"
     expose:
       - 8081
 
-  apply-migrations:
-    <<: *backend
-    command: bin/wait-all bin/migrate
-
   dramatiq:
     <<: *backend
-    command: bin/wait-all bin/dramatiq
+    command: sh -c "while ping -c1 apply-migrations &> /dev/null; do sleep 1; done; echo \"Migration job finished!\" && bin/wait-all bin/dramatiq"
 
   ui:
     image: $IMG_REGISTRY/ui:$IMG_TAG
@@ -193,10 +196,38 @@ services:
     expose:
       - 8764
 
+  vault:
+    image: $IMG_REGISTRY/vault:$IMG_TAG
+    expose:
+      - "8200"
+    restart: on-failure:5
+    volumes:
+      - vault-data:/vault/data:rw
+      - vault-config:/vault/config:rw
+    cap_add:
+      - IPC_LOCK
+    entrypoint: /vault-start.sh
 
+  vault-init:
+    depends_on:
+    - vault
+    image: $IMG_REGISTRY/vault:$IMG_TAG
+    volumes:
+      - vault-config:/vault/config:rw
+      - vault-policies:/vault/policies:rw
+      - approle:/approle
+    entrypoint: /init/vault-init.sh
+
+    environment:
+      - VAULT_ADDR=http://vault:8200
+    command: sh /etc/init.d/vault-play.sh
 
 volumes:
   elasticsearch: {}
   influxdb: {}
   mongodb: {}
   victoria-metrics: {}
+  vault-data: {}
+  vault-config: {}
+  vault-policies: {}
+  approle: {}
