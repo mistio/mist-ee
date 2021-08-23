@@ -530,8 +530,8 @@ UI:rbac-1/4: *ui_test_template
 UI:rbac-2/4: *ui_test_template
 UI:rbac-3/4: *ui_test_template
 UI:rbac-4/4: *ui_test_template
-UI:constraints_field_size: *ui_test_template
-UI:constraints_expiration: *ui_test_template
+UI:constraints-field-size: *ui_test_template
+UI:constraints-expiration: *ui_test_template
 UI:orchestration: *ui_test_template
 UI:insights:
   <<: *ui_test_template
