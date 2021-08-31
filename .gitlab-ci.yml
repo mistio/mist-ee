@@ -563,7 +563,7 @@ MP:kubevirt-machine-create: *multiprovisioning_test_template
 MP:kvm-machine-create: *multiprovisioning_test_template
 MP:linode-machine-create: *multiprovisioning_test_template
 MP:lxd-machine-create: *multiprovisioning_test_template
-# MP:openstack-machine-create: *multiprovisioning_test_template
+MP:openstack-machine-create: *multiprovisioning_test_template
 MP:equinix-metal-machine-create: *multiprovisioning_test_template
 MP:rackspace-machine-create: *multiprovisioning_test_template
 MP:cloudsigma-machine-create: *multiprovisioning_test_template
@@ -575,7 +575,7 @@ VP:digital-ocean-volume-create: *multiprovisioning_test_template
 VP:ec2-volume-create: *multiprovisioning_test_template
 VP:gce-volume-create: *multiprovisioning_test_template
 VP:cloudsigma-volume-create: *multiprovisioning_test_template
-# VP:openstack-volume-create: *multiprovisioning_test_template
+VP:openstack-volume-create: *multiprovisioning_test_template
 #################### UNDEPLOY STAGE ####################
 
 .undeploy_template: &undeploy_template
