@@ -175,6 +175,8 @@ build api:
           --build-arg FROM_IMAGE=$SRC_IMG \
           --build-arg MIST_VERSION_SHA=$CI_COMMIT_SHA \
           --build-arg MIST_VERSION_NAME=$CI_COMMIT_REF_NAME \
+          --build-arg CI_API_V4_URL=$CI_API_V4_URL \
+          --build-arg VICTORIAMETRICS_RBAC_GITLAB_TOKEN=$VICTORIAMETRICS_RBAC_GITLAB_TOKEN \
           .
     - docker_push $CI_PROJECT_NAME/api:$CI_COMMIT_SHA api
 
