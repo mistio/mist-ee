@@ -18,11 +18,6 @@ ENV DEFAULTS_FILE=/etc/mist/defaults.py \
 COPY ./defaults.py $DEFAULTS_FILE
 RUN mkdir -p $(dirname $SETTINGS_FILE)
 
-# Download VictoriaMetrics RBAC .so file
-ARG CI_API_V4_URL
-ARG VICTORIAMETRICS_RBAC_GITLAB_TOKEN
-RUN wget -O promql_rbac.so --header "PRIVATE-TOKEN: ${VICTORIAMETRICS_RBAC_GITLAB_TOKEN}" `curl --header "PRIVATE-TOKEN: ${VICTORIAMETRICS_RBAC_GITLAB_TOKEN}" "${CI_API_V4_URL}/projects/126/releases" | jq -r .[0].assets.links[0].url` && cp promql_rbac.so /promql_rbac.so
-
 # Pass version info.
 ARG MIST_VERSION_SHA
 ARG MIST_VERSION_NAME
