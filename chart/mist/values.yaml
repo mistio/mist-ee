@@ -301,16 +301,139 @@ deployment:
 
   # Dramatiq deployment settings.
   dramatiq:
-    replicas: 2
-    autoscaling: *autoscaling
-    resources:
-      requests:
-        memory: 200Mi
-        cpu: 20m
-      limits:
-        memory: 800Mi
-        cpu: 2000m
+    dramatiq:
+      enabled: false
+      replicas: 2
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      queues:
+        - default
+        - mappings
+        - scripts
+        - provisioning
+        - schedules
+        - sessions
+        - polling
+        - ping_probe
+        - ssh_probe
+        - rules
 
+    # Queue-specific runners. Off by default.
+    default:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      queues:
+        - default
+    provisioning:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 1500m
+      queues:
+        - provisioning
+    polling:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - polling
+    mappings:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      queues:
+        - mappings
+        - sessions
+    scripts:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 1000Mi
+          cpu: 2000m
+      queues:
+        - scripts
+    probe:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 1000m
+      preemptible: true
+      queues:
+        - ssh_probe
+        - ping_probe
+    rules:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 1000m
+      preemptible: true
+      queues:
+        - rules
+    schedules:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 1000m
+      queues:
+        - schedules
   # Sockjs deployment settings.
   sockjs:
     replicas: 1
