@@ -319,10 +319,16 @@ deployment:
         - provisioning
         - schedules
         - sessions
-        - polling
         - ping_probe
         - ssh_probe
         - rules
+        - polling
+        - machines
+        - clusters
+        - networks
+        - zones
+        - volumes
+        - buckets
 
     # Queue-specific runners. Off by default.
     default:
@@ -365,6 +371,90 @@ deployment:
       preemptible: true
       queues:
         - polling
+    machines:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - machines
+    clusters:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - clusters
+    networks:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - networks
+    zones:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - zones
+    volumes:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - volumes
+    buckets:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - buckets
     mappings:
       enabled: true
       replicas: 1
@@ -406,6 +496,19 @@ deployment:
       preemptible: true
       queues:
         - ssh_probe
+    ping:
+      enabled: true
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 1000m
+      preemptible: true
+      queues:
         - ping_probe
     rules:
       enabled: true
@@ -505,3 +608,69 @@ deployment:
       limits:
         memory: 50Mi
         cpu: 200m
+
+  # APScheduler deployment settings
+  scheduler:
+    scheduler:
+      enabled: false
+      replicas: 1
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 10m
+        limits:
+          memory: 400Mi
+          cpu: 1000m
+      schedules:
+        - builtin
+        - user
+        - polling
+        - rules
+    builtin:
+      enabled: true
+      replicas: 1
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 10m
+        limits:
+          memory: 400Mi
+          cpu: 1000m
+      schedules:
+        - builtin
+    user:
+      enabled: true
+      replicas: 1
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 10m
+        limits:
+          memory: 400Mi
+          cpu: 1000m
+      schedules:
+        - user
+    polling:
+      enabled: true
+      replicas: 1
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 10m
+        limits:
+          memory: 400Mi
+          cpu: 1000m
+      schedules:
+        - polling 
+    rules:
+      enabled: true
+      replicas: 1
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 10m
+        limits:
+          memory: 400Mi
+          cpu: 1000m
+      schedules:
+        - rules
