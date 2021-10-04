@@ -302,7 +302,7 @@ deployment:
   # Dramatiq deployment settings.
   dramatiq:
     dramatiq:
-      enabled: false
+      enabled: true
       replicas: 2
       autoscaling: *autoscaling
       resources:
@@ -332,7 +332,7 @@ deployment:
 
     # Queue-specific runners. Off by default.
     default:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -345,7 +345,7 @@ deployment:
       queues:
         - default
     provisioning:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -358,7 +358,7 @@ deployment:
       queues:
         - provisioning
     polling:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -372,7 +372,7 @@ deployment:
       queues:
         - polling
     machines:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -386,7 +386,7 @@ deployment:
       queues:
         - machines
     clusters:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -400,7 +400,7 @@ deployment:
       queues:
         - clusters
     networks:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -414,7 +414,7 @@ deployment:
       queues:
         - networks
     zones:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -428,7 +428,7 @@ deployment:
       queues:
         - zones
     volumes:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -442,7 +442,7 @@ deployment:
       queues:
         - volumes
     buckets:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -456,7 +456,7 @@ deployment:
       queues:
         - buckets
     mappings:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -470,7 +470,7 @@ deployment:
         - mappings
         - sessions
     scripts:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -483,7 +483,7 @@ deployment:
       queues:
         - scripts
     probe:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -497,7 +497,7 @@ deployment:
       queues:
         - ssh_probe
     ping:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -511,7 +511,7 @@ deployment:
       queues:
         - ping_probe
     rules:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -525,7 +525,7 @@ deployment:
       queues:
         - rules
     schedules:
-      enabled: true
+      enabled: false
       replicas: 1
       autoscaling: *autoscaling
       resources:
