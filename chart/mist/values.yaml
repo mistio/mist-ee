@@ -612,7 +612,7 @@ deployment:
   # APScheduler deployment settings
   scheduler:
     scheduler:
-      enabled: false
+      enabled: true
       replicas: 1
       resources:
         requests:
@@ -627,7 +627,7 @@ deployment:
         - polling
         - rules
     builtin:
-      enabled: true
+      enabled: false
       replicas: 1
       resources:
         requests:
@@ -639,7 +639,7 @@ deployment:
       schedules:
         - builtin
     user:
-      enabled: true
+      enabled: false
       replicas: 1
       resources:
         requests:
@@ -651,7 +651,7 @@ deployment:
       schedules:
         - user
     polling:
-      enabled: true
+      enabled: false
       replicas: 1
       resources:
         requests:
@@ -663,7 +663,7 @@ deployment:
       schedules:
         - polling 
     rules:
-      enabled: true
+      enabled: false
       replicas: 1
       resources:
         requests:
