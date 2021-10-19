@@ -60,10 +60,11 @@ victoriametrics:
       search.latencyOffset: 0s
       # Don't cache the last 15m because they may be backfilled by telegraf
       search.cacheTimestampOffset: 15m
+      search.maxQueryLen: 1GiB
     resources:
       limits:
-        cpu: 50m
-        memory: 64Mi
+        cpu: 1
+        memory: 640Mi
       requests:
         cpu: 50m
         memory: 64Mi
@@ -74,8 +75,8 @@ victoriametrics:
     replicaCount: 1
     resources:
       limits:
-        cpu: 50m
-        memory: 64Mi
+        cpu: 1
+        memory: 640Mi
       requests:
         cpu: 50m
         memory: 64Mi
@@ -84,8 +85,8 @@ victoriametrics:
     retentionPeriod: 12
     resources:
       limits:
-        cpu: 500m
-        memory: 512Mi
+        cpu: 1
+        memory: 640Mi
       requests:
         cpu: 250m
         memory: 256Mi
@@ -300,15 +301,241 @@ deployment:
 
   # Dramatiq deployment settings.
   dramatiq:
-    replicas: 1
-    autoscaling: *autoscaling
-    resources:
-      requests:
-        memory: 200Mi
-        cpu: 20m
-      limits:
-        memory: 800Mi
-        cpu: 1000m
+    dramatiq:
+      enabled: true
+      replicas: 2
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      queues:
+        - default
+        - dramatiq_mappings
+        - dramatiq_scripts
+        - dramatiq_provisioning
+        - dramatiq_schedules
+        - dramatiq_sessions
+        - dramatiq_ping_probe
+        - dramatiq_ssh_probe
+        - dramatiq_rules
+        - dramatiq_polling
+        - dramatiq_machines
+        - dramatiq_clusters
+        - dramatiq_networks
+        - dramatiq_zones
+        - dramatiq_volumes
+        - dramatiq_buckets
+
+    # Queue-specific runners. Off by default.
+    default:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      queues:
+        - default
+    provisioning:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 1500m
+      queues:
+        - dramatiq_provisioning
+    polling:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - dramatiq_polling
+    machines:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - dramatiq_machines
+    clusters:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - dramatiq_clusters
+    networks:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - dramatiq_networks
+    zones:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - dramatiq_zones
+    volumes:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - dramatiq_volumes
+    buckets:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      preemptible: true
+      queues:
+        - dramatiq_buckets
+    mappings:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 2000m
+      queues:
+        - dramatiq_mappings
+        - dramatiq_sessions
+    scripts:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 1000Mi
+          cpu: 2000m
+      queues:
+        - dramatiq_scripts
+    probe:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 1000m
+      preemptible: true
+      queues:
+        - dramatiq_ssh_probe
+    ping:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 1000m
+      preemptible: true
+      queues:
+        - dramatiq_ping_probe
+    rules:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 1000m
+      queues:
+        - dramatiq_rules
+    schedules:
+      enabled: false
+      replicas: 1
+      autoscaling: *autoscaling
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 20m
+        limits:
+          memory: 800Mi
+          cpu: 1000m
+      queues:
+        - dramatiq_schedules
 
   # Sockjs deployment settings.
   sockjs:
@@ -358,20 +585,74 @@ deployment:
         memory: 250Mi
         cpu: 200m
 
-  # Manage deployment settings.
-  manage:
-    replicas: 1
-    autoscaling: *autoscaling
-    resources:
-      requests:
-        memory: 20Mi
-        cpu: 10m
-      limits:
-        memory: 50Mi
-        cpu: 200m
+  # APScheduler deployment settings
+  scheduler:
+    scheduler:
+      enabled: true
+      replicas: 1
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 10m
+        limits:
+          memory: 400Mi
+          cpu: 1000m
+      schedules:
+        - builtin
+        - user
+        - polling
+        - rules
+    builtin:
+      enabled: false
+      replicas: 1
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 10m
+        limits:
+          memory: 400Mi
+          cpu: 1000m
+      schedules:
+        - builtin
+    user:
+      enabled: false
+      replicas: 1
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 10m
+        limits:
+          memory: 400Mi
+          cpu: 1000m
+      schedules:
+        - user
+    polling:
+      enabled: false
+      replicas: 1
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 10m
+        limits:
+          memory: 400Mi
+          cpu: 1000m
+      schedules:
+        - polling 
+    rules:
+      enabled: false
+      replicas: 1
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 10m
+        limits:
+          memory: 400Mi
+          cpu: 1000m
+      schedules:
+        - rules
 
-  # Insight static elements deployment settings.
-  elements:
+  # Manage UI deployment settings.
+  manage:
     replicas: 1
     autoscaling: *autoscaling
     resources:

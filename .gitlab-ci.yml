@@ -175,8 +175,24 @@ build api:
           --build-arg FROM_IMAGE=$SRC_IMG \
           --build-arg MIST_VERSION_SHA=$CI_COMMIT_SHA \
           --build-arg MIST_VERSION_NAME=$CI_COMMIT_REF_NAME \
+          --build-arg CI_API_V4_URL=$CI_API_V4_URL \
+          --build-arg VICTORIAMETRICS_RBAC_GITLAB_TOKEN=$VICTORIAMETRICS_RBAC_GITLAB_TOKEN \
           .
     - docker_push $CI_PROJECT_NAME/api:$CI_COMMIT_SHA api
+
+build tests:
+  <<: *docker_template
+  script:
+    - git submodule sync --recursive api
+    - git submodule update --init --recursive api
+    - export SRC_IMG="${SUBMODULES_IMAGE:-mist}/tests:$(get_submodule_sha tests)"
+    - export IMG=$(echo "$CI_JOB_NAME" | cut -d " " -f2)
+    - |
+        docker build \
+          -t $CI_PROJECT_NAME/$IMG:$CI_COMMIT_SHA \
+          --build-arg SRC_IMG=$SRC_IMG \
+          -f docker/tests/Dockerfile .
+    - docker_push $CI_PROJECT_NAME/$IMG:$CI_COMMIT_SHA $IMG
 
 .docker_build_template: &docker_build_template
   <<: *docker_template
@@ -217,7 +233,6 @@ build nginx:
 
 retag landing: *docker_retag_template
 retag ui: *docker_retag_template
-retag tests: *docker_retag_template
 retag manage manage/ui: *docker_retag_template
 
 
@@ -352,6 +367,9 @@ compose:
             --set docker.ca="$DOCKER_CA" \
             --set awsAccessKey="$AWS_ACCESS_KEY" \
             --set awsSecretKey="$AWS_SECRET_KEY" \
+            --set victoriametrics.vminsert.fullnameOverride="$release-vminsert" \
+            --set victoriametrics.vmstorage.fullnameOverride="$release-vmstorage" \
+            --set victoriametrics.vmselect.fullnameOverride="$release-vmselect" \
             $tls_settings \
             $(elasticsearch_params) \
             $release ./chart/mist/
@@ -446,7 +464,7 @@ deploy master:
     EMAIL: thingirl.tester.mist.io+${CI_JOB_ID}@gmail.com
     IMAP_HOST: test-$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG-mailmock.test-$CI_PROJECT_NAME.svc.cluster.local
   before_script:
-    - 'export TEST=$(echo "$CI_JOB_NAME" | cut -d/ -f1 | cut -d: -f2,3 | tr : /)'
+    - 'export TEST=$(echo "$CI_JOB_NAME" | cut -d/ -f1 | cut -d: -f2-4 | tr : /)'
     - echo "Test argument is $TEST"
     - echo "Image used is $TESTS_IMAGE"
     - echo $TEST_SETTINGS | base64 -d > test_settings.py
@@ -473,6 +491,17 @@ API:main:scripts: *api_test_template
 API:main:teams: *api_test_template
 API:main:ip_whitelisting: *api_test_template
 API:main:volumes: *api_test_template
+API:main:v2:test_clouds_controller: *api_test_template
+API:main:v2:test_clusters_controller: *api_test_template
+API:main:v2:test_datapoints_controller: *api_test_template
+API:main:v2:test_images_controller: *api_test_template
+API:main:v2:test_jobs_controller: *api_test_template
+API:main:v2:test_keys_controller: *api_test_template
+API:main:v2:test_locations_controller: *api_test_template
+API:main:v2:test_orgs_controller: *api_test_template
+API:main:v2:test_scripts_controller: *api_test_template
+API:main:v2:test_sizes_controller: *api_test_template
+API:main:v2:test_users_controller: *api_test_template
 
 API:plugin:orchestration: *api_test_template
 .API:plugin:tunnels: *api_test_template
@@ -530,8 +559,8 @@ UI:rbac-1/4: *ui_test_template
 UI:rbac-2/4: *ui_test_template
 UI:rbac-3/4: *ui_test_template
 UI:rbac-4/4: *ui_test_template
-UI:constraints_field_size: *ui_test_template
-UI:constraints_expiration: *ui_test_template
+UI:constraints-field-size: *ui_test_template
+UI:constraints-expiration: *ui_test_template
 UI:orchestration: *ui_test_template
 UI:insights:
   <<: *ui_test_template
@@ -563,7 +592,7 @@ MP:kubevirt-machine-create: *multiprovisioning_test_template
 MP:kvm-machine-create: *multiprovisioning_test_template
 MP:linode-machine-create: *multiprovisioning_test_template
 MP:lxd-machine-create: *multiprovisioning_test_template
-# MP:openstack-machine-create: *multiprovisioning_test_template
+MP:openstack-machine-create: *multiprovisioning_test_template
 MP:equinix-metal-machine-create: *multiprovisioning_test_template
 MP:rackspace-machine-create: *multiprovisioning_test_template
 MP:cloudsigma-machine-create: *multiprovisioning_test_template
@@ -575,7 +604,7 @@ VP:digital-ocean-volume-create: *multiprovisioning_test_template
 VP:ec2-volume-create: *multiprovisioning_test_template
 VP:gce-volume-create: *multiprovisioning_test_template
 VP:cloudsigma-volume-create: *multiprovisioning_test_template
-# VP:openstack-volume-create: *multiprovisioning_test_template
+VP:openstack-volume-create: *multiprovisioning_test_template
 #################### UNDEPLOY STAGE ####################
 
 .undeploy_template: &undeploy_template
