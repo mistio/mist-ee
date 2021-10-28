@@ -1,5 +1,10 @@
 PORTAL_NAME = "Mist EE"
 DEFAULT_MONITORING_METHOD = 'telegraf-victoriametrics'
+PRICING_POLICY = {
+    "vsphere": {"CPU1CORE": (0, 3), "CPU1CORE_STOPPED": (0,0), "RAM1GB": (0, 1), "RAM1GB_STOPPED": (0, 0), "DISK1GB": (0, 0.02)},
+    "openstack": {"CPU1CORE": (0, 2), "CPU1CORE_STOPPED": (0,0), "RAM1GB": (0, 1), "RAM1GB_STOPPED": (0, 0), "DISK1GB": (0, 0.02)},
+}
+
 
 PLUGINS = [
     'rbac',
