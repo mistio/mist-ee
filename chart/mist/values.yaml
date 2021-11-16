@@ -226,6 +226,12 @@ extraSettings: ''
 # subcharts.
 nodeSelector: {}
 
+sentry:
+  api: ''
+  apiv2: ''
+  dramatiq: ''
+  sockjs: ''
+
 preemptible:
   tolerations:
   - key: "preemptible"
