@@ -553,7 +553,7 @@ deployment:
         memory: 100Mi
         cpu: 15m
       limits:
-        memory: 300Mi
+        memory: 800Mi
         cpu: 1200m
 
   # UI deployment settings.
