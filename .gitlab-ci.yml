@@ -487,39 +487,39 @@ deploy master:
   script:
     - /mist.tests/prepare_env.py --api -s /mist.tests/misttests/integration/api/$TEST.py
 
-API:main:api_token: *api_test_template
-API:main:clouds: *api_test_template
-API:main:dns: *api_test_template
-API:main:keys: *api_test_template
-API:main:images: *api_test_template
-API:main:libcloud_1/2: *api_test_template
-API:main:libcloud_2/2: *api_test_template
-API:main:machines: *api_test_template
-API:main:networks: *api_test_template
-API:main:schedules: *api_test_template
-API:main:scripts: *api_test_template
-API:main:teams: *api_test_template
-API:main:ip_whitelisting: *api_test_template
-API:main:volumes: *api_test_template
-API:main:v2:test_clouds_controller: *api_test_template
-API:main:v2:test_clusters_controller: *api_test_template
-API:main:v2:test_datapoints_controller: *api_test_template
-API:main:v2:test_images_controller: *api_test_template
-API:main:v2:test_jobs_controller: *api_test_template
-API:main:v2:test_keys_controller: *api_test_template
-API:main:v2:test_locations_controller: *api_test_template
-API:main:v2:test_networks_controller: *api_test_template
-API:main:v2:test_rules_controller: *api_test_template
-API:main:v2:test_orgs_controller: *api_test_template
-API:main:v2:test_scripts_controller: *api_test_template
-API:main:v2:test_sizes_controller: *api_test_template
-API:main:v2:test_users_controller: *api_test_template
-API:main:v2:test_volumes_controller: *api_test_template
-API:main:v2:test_zones_controller: *api_test_template
-API:main:v2:test_snapshots_controller: *api_test_template
+# API:main:api_token: *api_test_template
+# API:main:clouds: *api_test_template
+# API:main:dns: *api_test_template
+# API:main:keys: *api_test_template
+# API:main:images: *api_test_template
+# API:main:libcloud_1/2: *api_test_template
+# API:main:libcloud_2/2: *api_test_template
+# API:main:machines: *api_test_template
+# API:main:networks: *api_test_template
+# API:main:schedules: *api_test_template
+# API:main:scripts: *api_test_template
+# API:main:teams: *api_test_template
+# API:main:ip_whitelisting: *api_test_template
+# API:main:volumes: *api_test_template
+# API:main:v2:test_clouds_controller: *api_test_template
+# API:main:v2:test_clusters_controller: *api_test_template
+# API:main:v2:test_datapoints_controller: *api_test_template
+# API:main:v2:test_images_controller: *api_test_template
+# API:main:v2:test_jobs_controller: *api_test_template
+# API:main:v2:test_keys_controller: *api_test_template
+# API:main:v2:test_locations_controller: *api_test_template
+# API:main:v2:test_networks_controller: *api_test_template
+# API:main:v2:test_rules_controller: *api_test_template
+# API:main:v2:test_orgs_controller: *api_test_template
+# API:main:v2:test_scripts_controller: *api_test_template
+# API:main:v2:test_sizes_controller: *api_test_template
+# API:main:v2:test_users_controller: *api_test_template
+# API:main:v2:test_volumes_controller: *api_test_template
+# API:main:v2:test_zones_controller: *api_test_template
+# API:main:v2:test_snapshots_controller: *api_test_template
 
-API:plugin:orchestration: *api_test_template
-.API:plugin:tunnels: *api_test_template
+# API:plugin:orchestration: *api_test_template
+# .API:plugin:tunnels: *api_test_template
 
 
 .ui_test_template: &ui_test_template
@@ -538,49 +538,50 @@ API:plugin:orchestration: *api_test_template
 
 # UI Integration tests #
 
-UI:clouds-add-1/2: *ui_test_template
-UI:clouds-add-2/2: *ui_test_template
-UI:clouds-actions: *ui_test_template
-UI:keys: *ui_test_template
-UI:scripts: *ui_test_template
-UI:images-networks: *ui_test_template
-UI:user-actions: *ui_test_template
-UI:teams: *ui_test_template
-UI:zones: *ui_test_template
-UI:rules-1/3: *ui_test_template
-UI:rules-2/3: *ui_test_template
-UI:rules-3/3: *ui_test_template
-UI:machines-1/2:
-  <<: *ui_test_template
-  retry: 1
-UI:machines-2/2:
-  <<: *ui_test_template
-  retry: 1
-UI:monitoring:
-  <<: *ui_test_template
-  retry: 1
-UI:schedulers-1/2:
-  <<: *ui_test_template
-  retry: 1
-UI:schedulers-2/2:
-  <<: *ui_test_template
-  retry: 1
-UI:ip-whitelisting:
-  <<: *ui_test_template
-  only:
-    - staging
+# UI:clouds-add-1/2: *ui_test_template
+# UI:clouds-add-2/2: *ui_test_template
+# UI:clouds-actions: *ui_test_template
+# UI:keys: *ui_test_template
+# UI:scripts: *ui_test_template
+# UI:images-networks: *ui_test_template
+# UI:user-actions: *ui_test_template
+# UI:teams: *ui_test_template
+# UI:zones: *ui_test_template
+# UI:rules-1/3: *ui_test_template
+# UI:rules-2/3: *ui_test_template
+# UI:rules-3/3: *ui_test_template
+# UI:machines-1/2:
+#   <<: *ui_test_template
+#   retry: 1
+# UI:machines-2/2:
+#   <<: *ui_test_template
+#   retry: 1
+# UI:monitoring:
+#   <<: *ui_test_template
+#   retry: 1
+# UI:schedulers-1/2:
+#   <<: *ui_test_template
+#   retry: 1
+# UI:schedulers-2/2:
+#   <<: *ui_test_template
+#   retry: 1
+UI:schedulers-script: *ui_test_template
+# UI:ip-whitelisting:
+#   <<: *ui_test_template
+#   only:
+#     - staging
 
-UI:rbac-1/4: *ui_test_template
-UI:rbac-2/4: *ui_test_template
-UI:rbac-3/4: *ui_test_template
-UI:rbac-4/4: *ui_test_template
-UI:constraints-field-size: *ui_test_template
-UI:constraints-expiration: *ui_test_template
-UI:orchestration: *ui_test_template
-UI:insights:
-  <<: *ui_test_template
-  retry: 1
-UI:active-directory: *ui_test_template
+# UI:rbac-1/4: *ui_test_template
+# UI:rbac-2/4: *ui_test_template
+# UI:rbac-3/4: *ui_test_template
+# UI:rbac-4/4: *ui_test_template
+# UI:constraints-field-size: *ui_test_template
+# UI:constraints-expiration: *ui_test_template
+# UI:orchestration: *ui_test_template
+# UI:insights:
+#   <<: *ui_test_template
+#   retry: 1
+# UI:active-directory: *ui_test_template
 # Machine Provisioning tests #
 
 .multiprovisioning_test_template: &multiprovisioning_test_template
