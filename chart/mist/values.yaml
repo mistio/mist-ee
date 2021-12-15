@@ -323,13 +323,13 @@ deployment:
         - default
         - dramatiq_mappings
         - dramatiq_scripts
-        - dramatiq_provisioning
+        # - dramatiq_provisioning
         - dramatiq_schedules
         - dramatiq_sessions
         - dramatiq_ping_probe
         - dramatiq_ssh_probe
         - dramatiq_rules
-        - dramatiq_polling
+        # - dramatiq_polling
         - dramatiq_machines
         - dramatiq_clusters
         - dramatiq_networks
@@ -352,7 +352,7 @@ deployment:
       queues:
         - default
     provisioning:
-      enabled: false
+      enabled: true
       replicas: 1
       autoscaling: *autoscaling
       resources:
@@ -365,7 +365,7 @@ deployment:
       queues:
         - dramatiq_provisioning
     polling:
-      enabled: false
+      enabled: true
       replicas: 1
       autoscaling: *autoscaling
       resources:
