@@ -3,15 +3,14 @@ ARG FROM_IMAGE=mist/mist:staging
 FROM $FROM_IMAGE
 
 # Install plugins.
+COPY ./orchestration/ /opt/orchestration/
 COPY ./rbac/ /opt/rbac/
 COPY ./manage/ /opt/manage/
 COPY ./insights/ /opt/insights/
-COPY ./orchestration/ /opt/orchestration/
 COPY ./auth/ /opt/auth/
 COPY ./pricing/ /opt/pricing/
 RUN for plugin in rbac insights orchestration auth pricing; do pip install -e /opt/$plugin; pip install -r /opt/$plugin/requirements.txt 2>/dev/null || echo ok; done
 RUN for plugin in manage; do pip install -e /opt/$plugin/src; done
-
 # Configure product defaults.
 ENV DEFAULTS_FILE=/etc/mist/defaults.py \
     SETTINGS_FILE=/etc/mist/settings/settings.py

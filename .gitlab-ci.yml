@@ -205,8 +205,9 @@ build tests:
 build gocky: *docker_build_template
 build logstash: *docker_build_template
 build elasticsearch-manage: *docker_build_template
-build huproxy: *docker_build_template
+build sheller: *docker_build_template
 build wsproxy: *docker_build_template
+build vault: *docker_build_template
 
 
 build nginx:
@@ -353,6 +354,8 @@ compose:
             --set image.registry="$REGISTRY_IMAGE" \
             --set image.secrets[0].name="$image_secret_name" \
             --set http.host="$host" \
+            --set vault.address="$VAULT_ADDR" \
+            --set vault.token="$VAULT_TOKEN" \
             --set stripe.publicApiKey="$STRIPE_PUBLIC_APIKEY" \
             --set stripe.secretApiKey="$STRIPE_SECRET_APIKEY" \
             --set ldapSettings.SERVER="$AD_SERVER" \
@@ -382,6 +385,17 @@ compose:
             sleep 5 && echo 'Environment not ready yet...'
           done
           echo "Environment ready at $CI_ENVIRONMENT_URL"
+          if [ $(curl -LI $VAULT_ADDR/v1/sys/sealed -o /dev/null -w '%{http_code}\n' -s) = 503 ]; then
+            echo "Vault is sealed"
+            curl --request POST -d "{\"key\":\"$VAULT_UNSEAL_1\"}" $VAULT_ADDR/v1/sys/unseal
+            curl --request POST -d "{\"key\":\"$VAULT_UNSEAL_2\"}" $VAULT_ADDR/v1/sys/unseal
+            curl --request POST -d "{\"key\":\"$VAULT_UNSEAL_3\"}" $VAULT_ADDR/v1/sys/unseal
+            if [ $(curl -LI $VAULT_ADDR/v1/sys/sealed -o /dev/null -w '%{http_code}\n' -s) == 503 ]; then
+              echo "Failed to unseal"
+            else
+              echo "Unsealed"
+            fi
+          fi
         }
   script:
     - echo "$values" > values.yaml
@@ -504,6 +518,7 @@ API:main:machines: *api_test_template
 API:main:networks: *api_test_template
 API:main:schedules: *api_test_template
 API:main:scripts: *api_test_template
+API:main:secrets: *api_test_template
 API:main:teams: *api_test_template
 API:main:ip_whitelisting: *api_test_template
 API:main:volumes: *api_test_template
