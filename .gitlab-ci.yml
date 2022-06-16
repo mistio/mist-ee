@@ -272,8 +272,7 @@ compose:
             CHART_VERSION=0.0.0
           fi
           export CHART_VERSION
-          envsubst < ./chart/mist/Chart.yaml > /tmp/Chart.yaml
-          mv /tmp/Chart.yaml ./chart/mist/Chart.yaml
+          sed -i "s/0.0.0/$CHART_VERSION/g" ./chart/mist/Chart.yaml
         }
 
         function set_if_not_empty() {
@@ -354,8 +353,6 @@ compose:
             --set image.registry="$REGISTRY_IMAGE" \
             --set image.secrets[0].name="$image_secret_name" \
             --set http.host="$host" \
-            --set vault.address="$VAULT_ADDR" \
-            --set vault.token="$VAULT_TOKEN" \
             --set stripe.publicApiKey="$STRIPE_PUBLIC_APIKEY" \
             --set stripe.secretApiKey="$STRIPE_SECRET_APIKEY" \
             --set ldapSettings.SERVER="$AD_SERVER" \
@@ -368,11 +365,20 @@ compose:
             --set docker.key="$DOCKER_KEY" \
             --set docker.cert="$DOCKER_CERT" \
             --set docker.ca="$DOCKER_CA" \
+            --set portalAdmin.enabled=false \
+            --set auth.email.signup=true \
             --set awsAccessKey="$AWS_ACCESS_KEY" \
             --set awsSecretKey="$AWS_SECRET_KEY" \
             --set victoriametrics.vminsert.fullnameOverride="$release-vminsert" \
             --set victoriametrics.vmstorage.fullnameOverride="$release-vmstorage" \
             --set victoriametrics.vmselect.fullnameOverride="$release-vmselect" \
+            --set vault.server.volumes[0].configMap.name="$release-vaultcfg" \
+            --set vault.server.volumes[0].configMap.defaultMode=511 \
+            --set vault.server.volumes[0].name="vault-config" \
+            --set vault.server.volumes[1].secret.secretName="$release-vaultsecret" \
+            --set vault.server.volumes[1].name="vault-approle-secret" \
+            --set vault.server.volumes[2].persistentVolumeClaim.claimName="$release-vaultroot" \
+            --set vault.server.volumes[2].name="vault-root-creds-pvc" \
             $tls_settings \
             $(elasticsearch_params) \
             $release ./chart/mist/
@@ -725,8 +731,7 @@ helm_chart_release:
 
         export CHART_VERSION=${CI_COMMIT_TAG:1}
         echo "CHART_VERSION=$CHART_VERSION"
-        envsubst < ./chart/mist/Chart.yaml > /tmp/Chart.yaml
-        mv /tmp/Chart.yaml ./chart/mist/Chart.yaml
+        sed -i "s/0.0.0/$CHART_VERSION/g" ./chart/mist/Chart.yaml
 
         gcloud auth activate-service-account --key-file=$GCLOUD_SERVICE_KEY
         set -o errexit

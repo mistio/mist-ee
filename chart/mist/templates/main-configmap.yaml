@@ -75,12 +75,19 @@ data:
       {{- end }}
     }
 
+    {{ if .Values.vault.deploy -}}
+    VAULT_ADDR = "http://{{ include "chart.fullname" . }}-vault:8200"
+    VAULT_TOKEN = ""
+    VAULT_ROLE_ID = ""
+    VAULT_SECRET_ID = ""
+    {{- else -}}
     VAULT_ADDR = "{{ .Values.vault.address }}"
     {{ if .Values.vault.roleId -}}
     VAULT_ROLE_ID = "{{ .Values.vault.roleId}}"
     VAULT_SECRET_ID = "{{ .Values.vault.secretId}}"
     {{- else -}}
     VAULT_TOKEN = "{{ .Values.vault.token }}"
+    {{- end }}
     {{- end }}
 
     STRIPE_SECRET_APIKEY = "{{ .Values.stripe.secretApiKey }}"
@@ -107,8 +114,17 @@ data:
     MEMCACHED_HOST = ["{{ include "chart.fullname" . }}-memcached:11211"]
     {{- end }}
 
+    {{- if .Values.docker.host }}
     DOCKER_IP = "{{ .Values.docker.host }}"
     DOCKER_PORT = "{{ .Values.docker.port }}"
+    {{ else if .Values.docker.deploy }}
+    DOCKER_IP = "{{ include "chart.fullname" . }}-dockerhost"
+    DOCKER_PORT = "2375"  
+    {{- else }}
+    DOCKER_IP = ""
+    DOCKER_PORT = ""
+    {{- end }}
+
     DOCKER_TLS_KEY = """
 {{ .Values.docker.key | indent 4 }}
     """.strip()
@@ -128,10 +144,6 @@ data:
   {{- end }}
 
     GITHUB_BOT_TOKEN = "{{ .Values.githubBotToken }}"
-
-    SIGN_KEY = "{{ .Values.internalKeys.sign }}"
-    SECRET = "{{ .Values.internalKeys.secret }}"
-    CILIA_SECRET_KEY = "{{ .Values.internalKeys.cilia }}"
 
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "{{ .Values.auth.google.key }}"
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "{{ .Values.auth.google.secret }}"
