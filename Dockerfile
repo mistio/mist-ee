@@ -1,5 +1,5 @@
 # Inherit the mist.api image.
-ARG FROM_IMAGE=mist/mist:staging
+ARG FROM_IMAGE=mist/mist:4-7-x-python3-11
 FROM $FROM_IMAGE
 
 # Configure product defaults.
