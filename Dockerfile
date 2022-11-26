@@ -1,6 +1,15 @@
-# Inherit the mist.api image.
 ARG FROM_IMAGE=mist/mist:4-8-x
+
+FROM golang:1.19-bullseye
+WORKDIR /opt
+RUN apt update && apt install -y libkrb5-dev && \
+    rm -rf /var/lib/apt/lists/* && \
+    git clone https://github.com/mongodb/mongo-tools.git && \
+    cd mongo-tools && ./make build
+
+# Inherit the mist.api image.
 FROM $FROM_IMAGE
+COPY --from=0 /opt/mongo-tools/bin/ /usr/local/bin
 
 # Install plugins.
 COPY ./rbac/ /opt/rbac/
