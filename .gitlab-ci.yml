@@ -46,17 +46,17 @@ discover submodules:
 
 .dind_template: &docker_template
   stage: build
-  image: docker:18.09.7-git
+  image: docker:19.03-git
   services:
-    - docker:18.09.7-dind
+    - docker:19.03-dind
   variables: &docker_variables
     DOCKER_DRIVER: overlay2
-    DOCKER_HOST: tcp://localhost:2375/
-    DOCKER_TLS_CERTDIR: ''
+    DOCKER_TLS_CERTDIR: "/certs"
   retry: 2
   tags:
-    - cpu
+    - builder
   before_script:
+    - docker info
     # Configure registries.
     - |
         export REGISTRIES=""
@@ -167,7 +167,7 @@ build api:
           git submodule sync $submodule
           git submodule update --init $submodule
         done
-    - SRC_IMG="${SUBMODULES_IMAGE:-mist}/mist:$(get_submodule_sha api)"
+    - SRC_IMG="${SUBMODULES_IMAGE:-mist}/api:$(get_submodule_sha api)"
     - docker_pull $SRC_IMG
     - |
         docker build \
@@ -231,11 +231,13 @@ build nginx:
     - export submodule="${arg2:-$arg1}"
     - echo "Will retag image $img from submodule $submodule."
     - docker_retag_submodule $submodule $img
+  tags:
+  - builder
 
 retag landing: *docker_retag_template
 retag ui: *docker_retag_template
+retag portal: *docker_retag_template
 retag manage manage/ui: *docker_retag_template
-
 
 compose:
   stage: build
@@ -503,21 +505,23 @@ deploy master:
     - echo "Image used is $TESTS_IMAGE"
     - echo $TEST_SETTINGS | base64 -d > test_settings.py
   dependencies: []
+  timeout: 15 minutes
 
 # API Integration tests #
 
 .api_test_template: &api_test_template
   <<: *test_template
   script:
-    - /mist.tests/prepare_env.py --api -s /mist.tests/misttests/integration/api/$TEST.py
+    - /mist.tests/prepare_env.py --api -s -x /mist.tests/misttests/integration/api/$TEST.py
 
 .api_test_template_manual: &api_test_template_manual
   <<: *test_template
   script:
-    - /mist.tests/prepare_env.py --api -s /mist.tests/misttests/integration/api/$TEST.py
+    - /mist.tests/prepare_env.py --api -s -x /mist.tests/misttests/integration/api/$TEST.py
   when: manual
 
 API:main:api_token: *api_test_template
+API:main:buckets: *api_test_template
 API:main:clouds: *api_test_template
 API:main:dns: *api_test_template
 API:main:keys: *api_test_template
@@ -543,21 +547,24 @@ API:main:v2:test_networks_controller: *api_test_template
 API:main:v2:test_rules_controller: *api_test_template
 API:main:v2:test_orgs_controller: *api_test_template
 API:main:v2:test_scripts_controller: *api_test_template
+API:main:v2:test_schedules_controller: *api_test_template
 API:main:v2:test_sizes_controller: *api_test_template
 API:main:v2:test_users_controller: *api_test_template
 API:main:v2:test_volumes_controller: *api_test_template
 API:main:v2:test_zones_controller: *api_test_template
 API:main:v2:test_snapshots_controller: *api_test_template
-API:main:v2:test_machines_controller: *api_test_template
+API:main:v2:test_machines_controller_1: *api_test_template
+API:main:v2:test_machines_controller_2: *api_test_template
+API:main:v2:test_machines_controller_3: *api_test_template
 API:main:v2:test_search_tags: *api_test_template
-API:plugin:orchestration: *api_test_template
+API:plugin:orchestration: *api_test_template_manual
 .API:plugin:tunnels: *api_test_template
 
 
 .ui_test_template: &ui_test_template
   <<: *test_template
   script:
-    - /mist.tests/prepare_env.py -k --stop --tags=$TEST /mist.tests/misttests/integration/gui/core/pr/features
+    - /mist.tests/prepare_env.py -k --stop --tags=$TEST /mist.tests/misttests/integration/gui/v1/pr/features
   artifacts:
     paths:
       - js_console.log

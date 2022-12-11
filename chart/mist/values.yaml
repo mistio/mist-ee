@@ -131,6 +131,8 @@ victoriametrics:
   # Use existing Victoria Metrics cluster
   readEndpoint: ''
   writeEndpoint: ''
+  rbac:
+    pspEnabled: false
   vmselect:
     replicaCount: 1
     extraArgs:
@@ -170,7 +172,7 @@ victoriametrics:
         memory: 256Mi
     persistentVolume:
       size: 8Gi
-      storageClass: standard
+      storageClass: ""
 
 # Options for rabbitmq subchart.
 rabbitmq:
@@ -194,6 +196,10 @@ rabbitmq:
       cpu: 2000m
   service:
     clusterIP: ''
+    extraPorts:
+    - name: streams
+      port: 5552
+      targetPort: 5552
   nodeSelector: {}
   updateStrategy:
     type: RollingUpdate
@@ -207,6 +213,10 @@ rabbitmq:
     enabled: true
     existingSecret: |-
       {{ .Release.Name }}-rabbitmq-definition
+  extraPlugins: rabbitmq_stream rabbitmq_stream_management
+  extraEnvVars:
+  - name: RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS
+    value: -rabbitmq_stream advertised_host '{{ .Release.Name }}-rabbitmq' -rabbitmq_stream advertised_port 5552 -rabbitmq_stream -rabbit loopback_users "none"
 
 # Use an external rabbitmq. This will only be used
 # if `rabbitmq.deploy` is false.
@@ -726,6 +736,17 @@ deployment:
         memory: 250Mi
         cpu: 200m
 
+  # Portal deployment settings.
+  portal:
+    replicas: 1
+    autoscaling: *autoscaling
+    resources:
+      requests:
+        memory: 50Mi
+        cpu: 10m
+      limits:
+        memory: 250Mi
+        cpu: 200m
   # APScheduler deployment settings
   scheduler:
     scheduler:

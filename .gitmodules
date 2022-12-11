@@ -37,4 +37,6 @@
 [submodule "pricing"]
 	path = pricing
 	url = ../mist.pricing.git
-
+[submodule "portal"]
+	path = portal
+	url = ../mist-portal
