@@ -1,42 +1,39 @@
 [submodule "api"]
 	path = api
-	url = ../mist.api.git
+	url = ../milos-api.git
 [submodule "ui"]
 	path = ui
-	url = ../mist.ui.git
+	url = ../milos-ui.git
 [submodule "landing"]
 	path = landing
-	url = ../mist.landing.git
+	url = ../milos-landing.git
 [submodule "tests"]
 	path = tests
-	url = ../mist.tests.git
+	url = ../milos-tests.git
 [submodule "rbac"]
 	path = rbac
-	url = ../mist.rbac.git
+	url = ../milos-rbac.git
 [submodule "manage"]
 	path = manage
-	url = ../mist.manage.git
+	url = ../milos-manage.git
 [submodule "insights"]
 	path = insights
-	url = ../mist.insights.git
+	url = ../milos-insights-plugin.git
 [submodule "orchestration"]
 	path = orchestration
-	url = ../mist.orchestration.git
+	url = ../milos-orchestration.git
 [submodule "auth"]
 	path = auth
-	url = ../mist.auth.git
+	url = ../milos-auth.git
 [submodule "docker/nginx/static/ui/mist-rbac-behavior"]
 	path = docker/nginx/static/ui/mist-rbac-behavior
-	url = ../mist-rbac-behavior
+	url = ../milos-rbac-behavior.git
 [submodule "docker/nginx/static/novnc"]
 	path = docker/nginx/static/novnc
-	url = https://github.com/novnc/noVNC.git
-[submodule "orchestration"]
-	path = orchestration
-	url = ../mist.orchestration.git
+	url = ../milos-noVNC.git
 [submodule "pricing"]
 	path = pricing
-	url = ../mist.pricing.git
+	url = ../milos-pricing.git
 [submodule "portal"]
 	path = portal
-	url = ../mist-portal
+	url = ../milos-portal.git

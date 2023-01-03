@@ -1,0 +1,16 @@
+// Copyright © 2022 Dell Inc. or its subsidiaries. All Rights Reserved.
+
+/* 
+Jenkins Shared Libraries are used when running CI pipelines to keep code "DRY".
+The pipeline code can be found in https://eos2git.cec.lab.emc.com/ISG-Edge/devops-jenkins-library/
+*/
+@Library(['devops_shared_library', 'jenkins-global-lib']) _
+milosPipeline {
+    IMAGE_LIST = ['docker/elasticsearch-manage','docker/gocky','docker/logstash','docker/vault']
+}
+
+// to check: mist-ee Dockerfile building
+// to check: not building docker/nginx, docker/test
+// not building sheller, wsproxy. same image from repo
+// not building submodules, image already built in pipelines
+// todo: gocky pulling from dockerhub 

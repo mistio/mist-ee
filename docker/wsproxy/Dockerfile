@@ -1,1 +1,2 @@
-FROM mist/wsproxy:v0-1-0
+FROM amaas-eos-mw1.cec.lab.emc.com:5070/milos/main/wsproxy:latest
+# using wsproxy built by jenkins

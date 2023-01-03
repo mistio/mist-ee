@@ -1,5 +1,5 @@
 # Inherit the mist.api image.
-ARG FROM_IMAGE=mist/api:staging
+ARG FROM_IMAGE=amaas-eos-mw1.cec.lab.emc.com:5070/milos/main/api:latest
 FROM $FROM_IMAGE
 
 # Install plugins.

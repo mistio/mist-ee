@@ -1,4 +1,4 @@
-FROM nginx:1.17.1-alpine
+FROM amaas-eos-mw1.cec.lab.emc.com:5070/nginx:1.17.1-alpine
 
 RUN set -x \
 	# && addgroup -g 82 -S www-data \

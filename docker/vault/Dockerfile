@@ -1,4 +1,4 @@
-FROM vault:latest
+FROM amaas-eos-mw1.cec.lab.emc.com:5070/vault:latest
 RUN apk add vim grep socat jq
 RUN wget -O /bin/wait-for https://github.com/eficode/wait-for/releases/download/v2.2.3/wait-for \
     && chmod +x /bin/wait-for
