@@ -6,7 +6,7 @@ The pipeline code can be found in https://eos2git.cec.lab.emc.com/ISG-Edge/devop
 */
 @Library(['devops_shared_library', 'jenkins-global-lib']) _
 milosPipeline {
-    IMAGE_LIST = ['docker/elasticsearch-manage','docker/gocky','docker/logstash','docker/vault']
+    IMAGE_LIST = ['docker/elasticsearch-manage','docker/gocky','docker/logstash','docker/vault','.']
 }
 
 // to check: mist-ee Dockerfile building
