@@ -473,9 +473,7 @@ SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET = "mySecretValue"
 
 Finally, restart Mist to apply the configuration changes with `docker-compose restart`.
 
-## Managing Mist
 
-Mist is managed using `docker-compose`. Look that up for details. Some useful commands follow. Keep in mind that you need to run these from inside the directory containing the `docker-compose.yml` file:
 ##### Monitoring methods
 
 Mist stores monitoring metrics in InfluxDB by default. Since Mist v4.6, it is possible to use VictoriaMetrics instead. You can configure that in `settings/settings.py`:
