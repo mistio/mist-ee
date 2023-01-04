@@ -10,7 +10,7 @@ variables:
   DEPLOY_REGISTRY_AUTH: '1'
   # API & UI tests image
   TESTS_IMAGE: $CI_REGISTRY_IMAGE/tests:$CI_COMMIT_SHA
-  SUBMODULES_IMAGE: gcr.io/mist-ops
+  SUBMODULES_IMAGE: mist
 
 stages:
   - discover
