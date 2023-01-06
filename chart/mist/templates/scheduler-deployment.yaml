@@ -31,7 +31,7 @@ spec:
       - name: scheduler
         args:
         - bin/scheduler
-        image: {{ $.Values.image.registry }}/api:{{ $.Values.image.tag }}
+        image: {{ $.Values.image.registry }}/milos/main/ee:{{ $.Values.image.tag }}
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
         env:
         - name: SCHEDULES

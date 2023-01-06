@@ -22,7 +22,7 @@ spec:
 {{ toYaml .Values.image.secrets | indent 8 }}
       containers:
       - name: wsproxy
-        image: {{ .Values.image.registry }}/wsproxy:{{ .Values.image.tag }}
+        image: {{ .Values.image.registry }}/milos/main/wsproxy:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           limits:

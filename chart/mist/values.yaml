@@ -2,13 +2,17 @@
 # product/brandings. It shouldn't be overriden when deploying the chart.
 productShortName: mist
 
+dockerSecret:
+  name: docker-secret # pragma: allowlist secret
+  dockerconfigjson:  # pragma: allowlist secret
+
 # Settings for docker images used in the chart.
 image: &image-properties
   registry: gcr.io/mist-ops/mist-ee
-  tag: master
+  tag: latest
   pullPolicy: Always
   secrets:
-    - name: registry
+    - name: docker-secret
 
 ingress-nginx:
   deploy: true
@@ -259,7 +263,7 @@ monitoring:
   defaultMethod: telegraf-influxdb
 
 # Allow registration of dev users, used for testing purposes.
-enableDevUsers: false
+enableDevUsers: true
 
 # Set to false to serve raw UI files. Used during development.
 jsBuild: true

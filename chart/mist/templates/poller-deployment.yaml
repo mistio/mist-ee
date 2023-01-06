@@ -33,7 +33,7 @@ spec:
         - bin/poller
         - -s
         - {{ $settings.scheduler }}
-        image: {{ $.Values.image.registry }}/api:{{ $.Values.image.tag }}
+        image: {{ $.Values.image.registry }}/milos/main/ee:{{ $.Values.image.tag }}
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
         resources:
           requests:

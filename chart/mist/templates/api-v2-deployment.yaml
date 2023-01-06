@@ -25,7 +25,7 @@ spec:
 {{ toYaml .Values.image.secrets | indent 8 }}
       containers:
       - name: api-v2
-        image: {{ .Values.image.registry }}/api:{{ .Values.image.tag }}
+        image: {{ .Values.image.registry }}/milos/main/ee:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args:
         - /usr/local/bin/uwsgi

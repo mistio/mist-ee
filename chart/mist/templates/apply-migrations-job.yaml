@@ -26,7 +26,7 @@ spec:
       containers:
       - args:
         - bin/migrate
-        image: {{ .Values.image.registry }}/api:{{ .Values.image.tag }}
+        image: {{ .Values.image.registry }}/milos/main/ee:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: apply-migrations
         resources: {}
