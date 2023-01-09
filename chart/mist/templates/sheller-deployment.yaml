@@ -26,7 +26,7 @@ spec:
         - /app
         - --listen
         - 0.0.0.0:8086
-        image: {{ .Values.image.registry }}/milos/main/sheller:{{.Values.image.tag }}
+        image: {{ include "get.image.name" (dict "name" "milos-sheller" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           limits:

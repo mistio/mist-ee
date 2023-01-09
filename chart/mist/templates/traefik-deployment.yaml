@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: traefik
-        image: traefik:v1.5
+        image: {{ include "get.image.name" (dict "name" "traefik" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args:
         # - --logLevel=INFO

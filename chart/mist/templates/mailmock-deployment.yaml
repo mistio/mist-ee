@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: mailmock
-        image: mist/mailmock
+        image: {{ include "get.image.name" (dict "name" "mailmock" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: 8025

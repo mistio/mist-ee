@@ -25,7 +25,7 @@ spec:
         args:
         - sh
         - /entry.sh
-        image: {{ .Values.image.registry }}/milos/main/portal:{{ .Values.image.tag }}
+        image: {{ include "get.image.name" (dict "name" "milos-portal" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           requests:

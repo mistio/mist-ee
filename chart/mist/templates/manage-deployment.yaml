@@ -24,7 +24,7 @@ spec:
       - name: manage
         args:
         - nginx
-        image: {{ .Values.image.registry }}/milos/main/manage-ui:{{ .Values.image.tag }}
+        image: {{ include "get.image.name" (dict "name" "milos-manage-ui" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           requests:

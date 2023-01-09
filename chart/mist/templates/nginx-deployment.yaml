@@ -25,7 +25,7 @@ spec:
 {{ toYaml .Values.image.secrets | indent 8 }}
       containers:
       - name: nginx
-        image: {{ .Values.image.registry }}/nginx:{{ .Values.image.tag }}
+        image: {{ include "get.image.name" (dict "name" "nginx" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: 80

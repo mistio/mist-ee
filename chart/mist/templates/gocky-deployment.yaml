@@ -25,7 +25,7 @@ spec:
 {{ toYaml .Values.image.secrets | indent 8 }}
       containers:
       - name: gocky
-        image: {{ .Values.image.registry }}/milos/main/docker/gocky:{{ .Values.image.tag }}
+        image: {{ include "get.image.name" (dict "name" "milos-gocky" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args:
         - -config

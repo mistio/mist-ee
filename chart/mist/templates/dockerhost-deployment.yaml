@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: dockerhost
-        image: docker:20.10.14-dind
+        image: {{ include "get.image.name" (dict "name" "dockerhost" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         - name: DOCKER_TLS_CERTDIR

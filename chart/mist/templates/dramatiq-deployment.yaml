@@ -35,7 +35,7 @@ spec:
       - name: dramatiq-{{ $name }}
         args:
         - bin/dramatiq
-        image: {{ $.Values.image.registry }}/milos/main/ee:{{ $.Values.image.tag }}
+        image: {{ include "get.image.name" (dict "name" "milos-ee" "globals" $.Values.global) }}
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
         env:
         - name: DRAMATIQ_CONTEXT
