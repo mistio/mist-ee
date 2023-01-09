@@ -23,7 +23,7 @@ spec:
         env:
         - name: API_URL
           value: /api/v1/spec
-        image: mist/swagger-ui
+        image: {{ include "get.image.name" (dict "name" "swagger-ui" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           limits:

@@ -1,0 +1,82 @@
+global:
+  repository: amaas-eos-mw1.cec.lab.emc.com:5070/
+  branch: main
+  components:
+  - image: docker
+    name: dockerhost
+    version: 20.10.14-dind
+    project: ""
+  - image: elasticsearch
+    name: elasticsearch
+    version: 7.10.1
+    project: ""
+  - image: influxdb
+    name: influxdb
+    version: 1.8.4
+    project: ""
+  - image: mailmock
+    name: mailmock
+    version: latest
+    project: mist/
+  - image: memcached
+    name: memcached
+    version: latest
+    project: ""
+  - image: nginx
+    name: nginx
+    version: latest
+    project: ""
+  - image: kibana
+    name: kibana
+    version: 5.6.10
+    project: ""
+  - image: traefik
+    name: traefik
+    version: v1.5
+    project: ""
+  - image: swagger-ui
+    name: swagger-ui
+    version: latest
+    project: mist/
+  - image: ee
+    name: milos-ee
+    version: latest
+    project: milos/
+    #repository: localhost ( such parameter can be added for local testing)
+    #branch: usr/sneha
+  - image: portal
+    name: milos-portal
+    version: latest
+    project: milos/
+  - image: sheller
+    name: milos-sheller
+    version: latest
+    project: milos/
+  - image: ui
+    name: milos-ui
+    version: latest
+    project: milos/
+  - image: manage-ui
+    name: milos-manage-ui
+    version: latest
+    project: milos/
+  - image: wsproxy
+    name: milos-wsproxy
+    version: latest
+    project: milos/
+  - image: docker/elasticsearch-manage
+    name: milos-elasticsearch-manage
+    version: latest
+    project: milos/
+  - image: docker/gocky
+    name: milos-gocky
+    version: latest
+    project: milos/
+  - image: landing
+    name: milos-landing
+    version: latest
+    project: milos/
+  - image: docker/logstash
+    name: milos-logstash
+    version: latest
+    project: milos/

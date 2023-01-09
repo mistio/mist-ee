@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: influxdb
-        image: influxdb:1.8.4
+        image: {{ include "get.image.name" (dict "name" "influxdb" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         - name: INFLUXDB_DB

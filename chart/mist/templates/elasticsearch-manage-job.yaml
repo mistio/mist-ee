@@ -55,7 +55,7 @@ spec:
         - name: ELASTIC_VERIFY_CERTS
           value: ""
       {{- end }}
-        image: {{ .Values.image.registry }}/milos/main/docker/elasticsearch-manage:{{ .Values.image.tag }}
+        image: {{ include "get.image.name" (dict "name" "milos-elasticsearch-manage" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: elasticsearch-manage
         resources: {}

@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: elasticsearch
-        image: elasticsearch:7.10.1
+        image: {{ include "get.image.name" (dict "name" "elasticsearch" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
           - name: ES_JAVA_OPTS

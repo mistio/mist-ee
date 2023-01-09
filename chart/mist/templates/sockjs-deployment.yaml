@@ -27,7 +27,7 @@ spec:
       - name: sockjs
         args:
         - bin/sockjs
-        image: {{ .Values.image.registry }}/milos/main/ee:{{ .Values.image.tag }}
+        image: {{ include "get.image.name" (dict "name" "milos-ee" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
           requests:

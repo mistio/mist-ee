@@ -48,3 +48,17 @@ Test if the given value is an IP address
 {{- end -}}
 {{- print $rc }}
 {{- end -}}
+
+{{- define "get.image.name" -}}
+{{- range .globals.components }}   
+{{- if eq .name $.name }}
+    {{- $repo := .repository | default $.globals.repository }} 
+    {{- $branch := .branch | default $.globals.branch }}
+    {{- if hasPrefix "milos" .project }}
+      {{-  printf "%s%s%s/%s:%s" $repo .project $branch .image .version -}}
+    {{- else}}
+        {{- printf "%s%s%s:%s" $repo .project .image .version -}}
+    {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

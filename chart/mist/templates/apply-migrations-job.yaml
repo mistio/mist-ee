@@ -26,7 +26,7 @@ spec:
       containers:
       - args:
         - bin/migrate
-        image: {{ .Values.image.registry }}/milos/main/ee:{{ .Values.image.tag }}
+        image: {{ include "get.image.name" (dict "name" "milos-ee" "globals" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: apply-migrations
         resources: {}

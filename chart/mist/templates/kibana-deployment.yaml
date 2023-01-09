@@ -27,7 +27,7 @@ spec:
       {{- else }}
           value: http://{{ include "chart.fullname" . }}-elasticsearch:9200
       {{- end }}
-        image: kibana:5.6.10
+        image: {{ include "get.image.name" (dict "name" "kibana" "globals" .Values.global) }}
         resources:
           requests:
             cpu: 1m

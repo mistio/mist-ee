@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: memcached
-        image: memcached
+        image: {{ include "get.image.name" (dict "name" "memcached" "globals" .Values.global) }}
         resources:
           requests:
             memory: 30Mi
