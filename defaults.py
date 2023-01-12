@@ -1,4 +1,6 @@
-PORTAL_NAME = "Mist EE"
+PORTAL_NAME = "ProjectFrontier"
+EMAIL_LOGO = "static/logo.png"
+THEME = "edge"
 
 PLUGINS = [
     'rbac',
